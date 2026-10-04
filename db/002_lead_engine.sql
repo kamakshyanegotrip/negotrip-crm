@@ -1,5 +1,6 @@
 -- NegoTrip CRM · migration 002 · lead engine: duplicates, scoring, assignment, tasks, customers and the crm.api dispatcher
 -- Safe to run again: tables use IF NOT EXISTS, functions use CREATE OR REPLACE, seeds use ON CONFLICT DO NOTHING.
+-- Note: a dollar sign is never written directly before a quote in this file; n8n rewrites that sequence when it passes SQL through.
 
 CREATE TABLE IF NOT EXISTS crm.lead_duplicate (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -37,17 +38,17 @@ CREATE OR REPLACE FUNCTION crm.fn_s(v text, p_max int) RETURNS text LANGUAGE sql
 $fn$;
 
 CREATE OR REPLACE FUNCTION crm.fn_int(v text, p_lo int, p_hi int) RETURNS int LANGUAGE sql IMMUTABLE AS $fn$
-  SELECT CASE WHEN btrim(COALESCE(v, '')) ~ '^[0-9]{1,9}$' THEN LEAST(GREATEST(btrim(v)::int, p_lo), p_hi) END
+  SELECT CASE WHEN btrim(COALESCE(v, '')) ~ '^[0-9]{1,9}($)' THEN LEAST(GREATEST(btrim(v)::int, p_lo), p_hi) END
 $fn$;
 
 CREATE OR REPLACE FUNCTION crm.fn_num(v text) RETURNS numeric LANGUAGE sql IMMUTABLE AS $fn$
-  SELECT CASE WHEN regexp_replace(COALESCE(v, ''), '[^0-9.]', '', 'g') ~ '^[0-9]{1,12}([.][0-9]{1,4})?$'
+  SELECT CASE WHEN regexp_replace(COALESCE(v, ''), '[^0-9.]', '', 'g') ~ '^[0-9]{1,12}([.][0-9]{1,4})?($)'
               THEN regexp_replace(v, '[^0-9.]', '', 'g')::numeric END
 $fn$;
 
 CREATE OR REPLACE FUNCTION crm.fn_date(v text) RETURNS date LANGUAGE plpgsql IMMUTABLE AS $fn$
 BEGIN
-  IF v IS NULL OR left(btrim(v), 10) !~ '^[0-9]{4}-[0-9]{2}-[0-9]{2}$' THEN RETURN NULL; END IF;
+  IF v IS NULL OR left(btrim(v), 10) !~ '^[0-9]{4}-[0-9]{2}-[0-9]{2}($)' THEN RETURN NULL; END IF;
   RETURN left(btrim(v), 10)::date;
 EXCEPTION WHEN OTHERS THEN RETURN NULL;
 END $fn$;
@@ -60,7 +61,7 @@ EXCEPTION WHEN OTHERS THEN RETURN NULL;
 END $fn$;
 
 CREATE OR REPLACE FUNCTION crm.fn_uuid(v text) RETURNS uuid LANGUAGE sql IMMUTABLE AS $fn$
-  SELECT CASE WHEN lower(btrim(COALESCE(v, ''))) ~ '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$' THEN lower(btrim(v))::uuid END
+  SELECT CASE WHEN lower(btrim(COALESCE(v, ''))) ~ '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}($)' THEN lower(btrim(v))::uuid END
 $fn$;
 
 CREATE OR REPLACE FUNCTION crm.fn_norm_phone(p text) RETURNS text LANGUAGE plpgsql IMMUTABLE AS $fn$
@@ -77,7 +78,7 @@ BEGIN
 END $fn$;
 
 CREATE OR REPLACE FUNCTION crm.fn_norm_email(p text) RETURNS text LANGUAGE sql IMMUTABLE AS $fn$
-  SELECT CASE WHEN lower(btrim(COALESCE(p, ''))) ~ '^[^ @]+@[^ @]+[.][^ @]+$' THEN left(lower(btrim(p)), 160) END
+  SELECT CASE WHEN lower(btrim(COALESCE(p, ''))) ~ '^[^ @]+@[^ @]+[.][^ @]+($)' THEN left(lower(btrim(p)), 160) END
 $fn$;
 
 CREATE OR REPLACE FUNCTION crm.fn_name_key(p text) RETURNS text LANGUAGE sql IMMUTABLE AS $fn$
@@ -498,7 +499,7 @@ CREATE OR REPLACE FUNCTION crm.api_lead_create(st crm.staff, b jsonb, p_exec tex
 DECLARE v_rid text := crm.fn_s(b->>'request_id', 64); v_assign text := crm.fn_s(b->>'assign', 40); v_res jsonb;
 BEGIN
   IF NOT crm.fn_can_edit_leads(st.role) THEN PERFORM crm.fn_fail(403, 'read_only', 'Your role can view leads but not add them.'); END IF;
-  IF v_rid IS NULL OR v_rid !~ '^[A-Za-z0-9-]{8,64}$' THEN PERFORM crm.fn_fail(400, 'missing_request_id', 'This request is missing its ID. Reload the page and try again.'); END IF;
+  IF v_rid IS NULL OR v_rid !~ '^[A-Za-z0-9-]{8,64}($)' THEN PERFORM crm.fn_fail(400, 'missing_request_id', 'This request is missing its ID. Reload the page and try again.'); END IF;
   v_assign := CASE WHEN v_assign = 'auto' THEN 'auto'
                    WHEN crm.fn_uuid(v_assign) IS NOT NULL AND crm.fn_is_manager(st.role) THEN v_assign
                    ELSE 'creator' END;
