@@ -1,0 +1,15 @@
+{
+  "name": "NegoTrip CRM",
+  "short_name": "CRM",
+  "description": "Leads, customers and quotations for NegoTrip.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#F2F3F7",
+  "theme_color": "#1B1F3A",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

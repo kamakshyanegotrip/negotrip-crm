@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>CRM · NegoTrip</title>
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#1B1F3A">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js"></script>
+<style>
+:root{
+  --bg:#F2F3F7; --surface:#FFFFFF; --surface-2:#E8EAF1; --ink:#1B1F3A; --ink-2:#565B7A; --line:#D9DCE6;
+  --accent:#A8321E; --accent-ink:#FFFFFF; --gold:#C98A12; --ok:#2F7D6B; --warn:#B7791F; --danger:#B3261E; --scrim:rgba(16,18,42,.45);
+  --shadow:0 1px 2px rgba(27,31,58,.06),0 4px 14px rgba(27,31,58,.05);
+  --display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --body:"Figtree",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#10122A; --surface:#1A1D3A; --surface-2:#23274A; --ink:#ECEDF7; --ink-2:#A3A7C6; --line:#2E3358;
+    --accent:#E0654E; --accent-ink:#10122A; --gold:#E9B24A; --ok:#4DB39A; --warn:#E9B24A; --danger:#F08070; --scrim:rgba(0,0,0,.55);
+    --shadow:0 1px 2px rgba(0,0,0,.3);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#10122A; --surface:#1A1D3A; --surface-2:#23274A; --ink:#ECEDF7; --ink-2:#A3A7C6; --line:#2E3358;
+  --accent:#E0654E; --accent-ink:#10122A; --gold:#E9B24A; --ok:#4DB39A; --warn:#E9B24A; --danger:#F08070; --scrim:rgba(0,0,0,.55);
+  --shadow:0 1px 2px rgba(0,0,0,.3);
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{padding-top:env(safe-area-inset-top,0px);background:var(--bg)}
+body{margin:0;min-height:100vh;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:18px 16px 80px}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:8px}
+.num{font-variant-numeric:tabular-nums}
+
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.brand{display:flex;align-items:center;gap:12px}
+.mark{width:44px;height:44px;border-radius:12px;background:#1B1F3A;display:grid;place-items:center;flex:none}
+.mark svg{width:28px;height:28px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(26px,5vw,34px);line-height:1;margin:2px 0 0;letter-spacing:-.02em}
+h2{font-family:var(--display);font-weight:600;font-size:19px;margin:0 0 10px;letter-spacing:-.01em}
+.me{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);flex-wrap:wrap}
+.me a{font-weight:600;color:var(--ink);text-decoration:none;border:1px solid var(--line);background:var(--surface);border-radius:9px;padding:6px 10px}
+
+.tabs{display:flex;gap:6px;margin-bottom:16px;border-bottom:1px solid var(--line)}
+.tab{border:0;background:none;padding:10px 14px;font-weight:600;color:var(--ink-2);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--shadow)}
+.card + .card{margin-top:14px}
+.muted{color:var(--ink-2)}
+.small{font-size:12.5px}
+
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:14px}
+@media (max-width:760px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:var(--shadow)}
+.tile .lab{font-size:12.5px;color:var(--ink-2);font-weight:600}
+.tile .val{font-family:var(--display);font-weight:800;font-size:30px;line-height:1.1;margin-top:4px}
+
+.stages{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.stage{display:flex;justify-content:space-between;align-items:center;gap:8px;border:1px solid var(--line);border-radius:10px;padding:9px 12px;background:var(--bg);cursor:pointer;text-align:left;width:100%}
+.stage b{font-variant-numeric:tabular-nums}
+
+.field{margin-bottom:12px}
+.field label{display:block;font-size:13px;font-weight:600;margin-bottom:5px}
+.field .hint{font-size:12px;color:var(--ink-2);margin-top:4px}
+input[type=text],input[type=tel],input[type=email],input[type=date],input[type=number],input[type=search],select,textarea{width:100%;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font-size:15px;padding:10px 12px}
+input[type=text],input[type=tel],input[type=email],input[type=date],input[type=number],input[type=search],select{height:44px;padding-block:0}
+textarea{min-height:74px;resize:vertical;line-height:1.4}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.btn{height:44px;padding:0 18px;border-radius:11px;border:0;background:var(--accent);color:var(--accent-ink);font-weight:600;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;white-space:nowrap}
+.btn.ghost{background:var(--surface-2);color:var(--ink)}
+.btn:disabled{opacity:.5;cursor:default}
+
+.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.bar .grow{flex:1 1 220px;min-width:0}
+.bar select{width:auto;min-width:170px}
+
+.pill{font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;border-radius:999px;padding:2px 8px;background:var(--surface-2);color:var(--ink-2);white-space:nowrap}
+.pill.ok{background:color-mix(in srgb,var(--ok) 18%,transparent);color:var(--ok)}
+.pill.warn{background:color-mix(in srgb,var(--warn) 20%,transparent);color:var(--warn)}
+.pill.bad{background:color-mix(in srgb,var(--danger) 16%,transparent);color:var(--danger)}
+.pill.acc{background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent)}
+
+.tablewrap{overflow-x:auto;margin:0 -18px;padding:0 18px}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:760px}
+th{font-size:12px;text-align:left;color:var(--ink-2);font-weight:600;padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:10px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+td .sub{font-size:12.5px;color:var(--ink-2)}
+td .no{font-family:var(--mono);font-size:11.5px}
+@media (max-width:700px){
+  .tablewrap{overflow:visible;margin:0;padding:0}
+  table{min-width:0}
+  thead{display:none}
+  tr{display:block;border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:8px;background:var(--bg)}
+  td{display:block;border:0;padding:2px 0}
+}
+
+.empty{text-align:center;padding:36px 18px}
+.gate{min-height:70vh;display:grid;place-items:center}
+.gate .card{max-width:440px;text-align:center;padding:28px 22px}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:24px;z-index:40;background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;font-size:14px;max-width:calc(100% - 32px)}
+.err{color:var(--danger);font-size:13.5px;margin:0 0 10px}
+
+dialog{border:1px solid var(--line);border-radius:18px;padding:0;background:var(--surface);color:var(--ink);width:min(560px,calc(100% - 24px));max-height:calc(100vh - 32px)}
+dialog::backdrop{background:var(--scrim)}
+.sheet{padding:20px}
+.sheet .actions{display:flex;gap:8px;justify-content:flex-end;margin-top:6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <div class="mark" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="11" fill="none" stroke="#E9B24A" stroke-width="2.4"/><circle cx="16" cy="16" r="4.2" fill="#E0654E"/><path d="M16 3v5M16 24v5M3 16h5M24 16h5" stroke="#E9B24A" stroke-width="2.4" stroke-linecap="round"/></svg></div>
+      <div><div class="eyebrow">NegoTrip HQ</div><h1>CRM</h1></div>
+    </div>
+    <div class="me" id="me"></div>
+  </header>
+  <main id="app"><div class="gate"><p class="muted">Loading…</p></div></main>
+</div>
+
+<dialog id="leadSheet" aria-labelledby="leadTitle">
+  <form class="sheet" id="leadForm" novalidate>
+    <h2 id="leadTitle">Add a lead</h2>
+    <p class="err" id="leadErr" role="alert" hidden></p>
+    <div class="field"><label for="lName">Name</label><input type="text" id="lName" maxlength="120" autocomplete="off" required></div>
+    <div class="row2">
+      <div class="field"><label for="lPhone">Phone</label><input type="tel" id="lPhone" maxlength="30" autocomplete="off" placeholder="10 digits, or +country code"></div>
+      <div class="field"><label for="lEmail">Email</label><input type="email" id="lEmail" maxlength="160" autocomplete="off"></div>
+    </div>
+    <div class="row2">
+      <div class="field"><label for="lSource">Where it came from</label><select id="lSource"></select></div>
+      <div class="field"><label for="lDest">Destination</label><input type="text" id="lDest" maxlength="120" autocomplete="off" placeholder="e.g. Puri, Konark"></div>
+    </div>
+    <div class="row3">
+      <div class="field"><label for="lDate">Travel date</label><input type="date" id="lDate"></div>
+      <div class="field"><label for="lAdults">Adults</label><input type="number" id="lAdults" min="0" max="500" inputmode="numeric"></div>
+      <div class="field"><label for="lKids">Children</label><input type="number" id="lKids" min="0" max="500" inputmode="numeric"></div>
+    </div>
+    <div class="field"><label for="lBudget">Budget in rupees <span class="muted">(optional)</span></label><input type="number" id="lBudget" min="0" inputmode="numeric"></div>
+    <div class="field"><label for="lMsg">What they asked for <span class="muted">(optional)</span></label><textarea id="lMsg" maxlength="2000"></textarea></div>
+    <div class="actions">
+      <button type="button" class="btn ghost" id="leadCancel">Cancel</button>
+      <button type="submit" class="btn" id="leadSave">Save lead</button>
+    </div>
+  </form>
+</dialog>
+
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script>
+"use strict";
+// ---------------------------------------------------------------- config
+const SUPABASE_URL = "https://wbynfjiaxpcoxthfuusk.supabase.co";
+const SUPABASE_KEY = "sb_publishable_9LY7RvJpP7wY8rxp8edMmQ_eT-FcbuC"; // public browser key (same as NegoTrip HQ)
+const API = "https://n8n.assignover.in/webhook/travelcrm-api";
+const HQ_URL = new URL("../negotrip-hq/", location.href).href;
+
+const STATUS = {
+  new:"New", contacted:"Contacted", qualified:"Qualified", requirement_collected:"Requirement taken",
+  quoted:"Quoted", negotiating:"Negotiating", won:"Won", lost:"Lost", dormant:"Dormant", duplicate:"Duplicate"
+};
+const STATUS_TONE = { new:"acc", won:"ok", lost:"bad", negotiating:"warn", quoted:"warn" };
+const ROLE = {
+  super_admin:"Owner", company_admin:"Company admin", branch_manager:"Branch manager", sales_manager:"Sales manager",
+  sales_executive:"Sales executive", operations:"Operations", accounts:"Accounts", marketing:"Marketing",
+  supplier_manager:"Supplier manager", read_only:"View only"
+};
+
+const sb = window.supabase && window.supabase.createClient
+  ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {auth:{persistSession:true, autoRefreshToken:true, detectSessionInUrl:false}})
+  : null;
+
+// ---------------------------------------------------------------- helpers
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function toast(msg){ const t=$("#toast"); t.textContent=msg; t.hidden=false; clearTimeout(toast._t); toast._t=setTimeout(()=>t.hidden=true, 3500); }
+function day(iso){
+  if(!iso) return "";
+  const d = new Date(String(iso).length===10 ? iso+"T00:00:00" : iso);
+  if(isNaN(d)) return "";
+  const opt = {day:"numeric", month:"short"};
+  if(d.getFullYear() !== new Date().getFullYear()) opt.year = "numeric";
+  return d.toLocaleDateString("en-IN", opt);
+}
+function newId(){
+  if(window.crypto && crypto.randomUUID) return crypto.randomUUID();
+  return "r-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 12);
+}
+
+// ---------------------------------------------------------------- API
+async function token(){
+  if(!sb) throw Object.assign(new Error("The sign-in library did not load."),{code:"no_sb"});
+  const { data:{ session } } = await sb.auth.getSession();
+  if(!session) throw Object.assign(new Error("Please sign in."),{code:"signed_out"});
+  return session.access_token;
+}
+async function api(action, payload={}){
+  const r = await fetch(API, {method:"POST", headers:{"Content-Type":"application/json", "Authorization":"Bearer "+await token()}, body:JSON.stringify({action, ...payload})});
+  let data = null;
+  try{ data = await r.json(); }catch(e){}
+  if(r.ok && data) return data;
+  const code = (data && data.error) || (r.status===401 ? "signed_out" : "server_error");
+  throw Object.assign(new Error((data && data.message) || ("The server answered "+r.status+".")), {code, status:r.status});
+}
+
+// ---------------------------------------------------------------- state
+const S = { me:null, boot:null, tab:"dashboard", leads:[], status:"", q:"", loadingLeads:false, leadsErr:"", requestId:"" };
+
+// ---------------------------------------------------------------- boot
+async function boot(){
+  if(!sb){ gate("CRM", "The sign-in library did not load. Check your connection and reload."); return; }
+  const { data:{ session } } = await sb.auth.getSession();
+  if(!session){ gateSignIn(); return; }
+  try{
+    S.boot = await api("bootstrap");
+    S.me = S.boot.me;
+  }catch(e){
+    if(e.code==="signed_out"){ gateSignIn(); return; }
+    if(e.status===403){ gate("No access yet", e.message); return; }
+    gate("Couldn't open the CRM", e.message + " Reload to try again."); return;
+  }
+  $("#me").innerHTML = `<span>${esc(S.me.name || S.me.email)} · ${esc(ROLE[S.me.role] || S.me.role)}</span><a href="${esc(HQ_URL)}">← HQ</a>`;
+  renderShell();
+}
+function gate(title, msg){ $("#app").innerHTML = `<div class="gate"><div class="card"><h2>${esc(title)}</h2><p class="muted">${esc(msg)}</p><a class="btn" href="${esc(HQ_URL)}">Open NegoTrip HQ</a></div></div>`; }
+function gateSignIn(){ $("#app").innerHTML = `<div class="gate"><div class="card"><h2>Sign in first</h2><p class="muted">The CRM uses your NegoTrip HQ sign-in. Sign in there with your Google account, then come back to this page.</p><a class="btn" href="${esc(HQ_URL)}">Sign in at NegoTrip HQ</a></div></div>`; }
+if(sb) sb.auth.onAuthStateChange(ev=>{ if(ev==="SIGNED_OUT") gateSignIn(); });
+
+// ---------------------------------------------------------------- shell
+function renderShell(){
+  $("#app").innerHTML = `
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" data-tab="dashboard">Dashboard</button>
+      <button class="tab" role="tab" data-tab="leads">Leads</button>
+    </div>
+    <section id="view"></section>`;
+  showTab(S.tab);
+}
+function showTab(tab){
+  S.tab = tab;
+  document.querySelectorAll(".tab").forEach(b=>b.setAttribute("aria-selected", String(b.dataset.tab===tab)));
+  if(tab==="leads"){ renderLeads(); loadLeads(); } else renderDashboard();
+}
+
+function renderDashboard(){
+  const b = S.boot, c = b.lead_counts || {};
+  const canAdd = S.me.role !== "read_only";
+  const tiles = [
+    ["Leads in total", b.leads_total],
+    ["Added in the last 7 days", b.leads_last_7_days],
+    ["New, not yet contacted", c.new || 0],
+    ["My open tasks", b.my_open_tasks]
+  ];
+  $("#view").innerHTML = `
+    <div class="tiles">${tiles.map(t=>`<div class="tile"><div class="lab">${esc(t[0])}</div><div class="val num">${esc(t[1] ?? 0)}</div></div>`).join("")}</div>
+    <div class="card">
+      <h2>Leads by stage</h2>
+      ${b.leads_total
+        ? `<div class="stages">${Object.keys(STATUS).map(k=>`<button class="stage" data-stage="${k}"><span>${esc(STATUS[k])}</span><b>${esc(c[k] || 0)}</b></button>`).join("")}</div>`
+        : `<div class="empty"><p class="muted">No leads yet.</p>${canAdd ? `<button class="btn" data-add>Add the first lead</button>` : ""}</div>`}
+    </div>`;
+}
+
+function renderLeads(){
+  const canAdd = S.me.role !== "read_only";
+  $("#view").innerHTML = `
+    <div class="card">
+      <div class="bar">
+        <div class="grow"><input type="search" id="q" placeholder="Search name, phone, email, destination or lead number" value="${esc(S.q)}" aria-label="Search leads"></div>
+        <select id="fStatus" aria-label="Stage"><option value="">All stages</option>${Object.keys(STATUS).map(k=>`<option value="${k}" ${S.status===k?"selected":""}>${esc(STATUS[k])}</option>`).join("")}</select>
+        ${canAdd ? `<button class="btn" data-add>Add lead</button>` : ""}
+      </div>
+      <div id="leadList"></div>
+    </div>`;
+  renderLeadList();
+}
+function renderLeadList(){
+  const host = $("#leadList"); if(!host) return;
+  if(S.loadingLeads && !S.leads.length){ host.innerHTML = `<p class="muted empty">Loading leads…</p>`; return; }
+  if(S.leadsErr){ host.innerHTML = `<div class="empty"><p class="err">${esc(S.leadsErr)}</p><button class="btn ghost" data-retry>Try again</button></div>`; return; }
+  if(!S.leads.length){
+    host.innerHTML = `<p class="muted empty">${S.q || S.status ? "No leads match this search." : "No leads yet."}</p>`; return;
+  }
+  host.innerHTML = `<div class="tablewrap"><table>
+    <thead><tr><th>Name</th><th>Contact</th><th>Trip</th><th>From</th><th>Owner</th><th>Stage</th><th>Added</th></tr></thead>
+    <tbody>${S.leads.map(l=>{
+      const pax = [l.pax_adults ? l.pax_adults+" adult"+(l.pax_adults===1?"":"s") : "", l.pax_children ? l.pax_children+" child"+(l.pax_children===1?"":"ren") : ""].filter(Boolean).join(", ");
+      const trip = [l.destination_text, day(l.travel_start)].filter(Boolean).join(" · ");
+      return `<tr>
+        <td><b>${esc(l.full_name || "No name")}</b><div class="sub no">${esc(l.lead_no)}</div></td>
+        <td>${l.phone_e164 ? `<a href="tel:${esc(l.phone_e164)}">${esc(l.phone_e164)}</a>` : ""}${l.email ? `<div class="sub">${esc(l.email)}</div>` : ""}</td>
+        <td>${esc(trip)}${pax ? `<div class="sub">${esc(pax)}</div>` : ""}</td>
+        <td>${esc(l.source)}</td>
+        <td>${esc(l.owner_name || "Unassigned")}</td>
+        <td><span class="pill ${STATUS_TONE[l.status] || ""}">${esc(STATUS[l.status] || l.status)}</span></td>
+        <td class="num">${esc(day(l.created_at))}</td>
+      </tr>`; }).join("")}</tbody></table></div>`;
+}
+let leadSeq = 0;
+async function loadLeads(){
+  const seq = ++leadSeq;
+  S.loadingLeads = true; S.leadsErr = ""; renderLeadList();
+  try{
+    const r = await api("leads_list", {status:S.status, q:S.q, limit:100});
+    if(seq !== leadSeq) return;
+    S.leads = r.leads || [];
+  }catch(e){
+    if(seq !== leadSeq) return;
+    if(e.code==="signed_out"){ gateSignIn(); return; }
+    S.leadsErr = "Couldn't load leads. " + e.message;
+  }
+  S.loadingLeads = false; renderLeadList();
+}
+
+// ---------------------------------------------------------------- add lead
+const sheet = $("#leadSheet"), form = $("#leadForm");
+function openLeadSheet(){
+  form.reset();
+  $("#leadErr").hidden = true;
+  $("#lSource").innerHTML = (S.boot.sources || []).map(s=>`<option value="${esc(s.code)}" ${s.code==="phone"?"selected":""}>${esc(s.name)}</option>`).join("");
+  S.requestId = newId();
+  sheet.showModal();
+  $("#lName").focus();
+}
+function leadError(msg){ const e=$("#leadErr"); e.textContent=msg; e.hidden=false; }
+form.addEventListener("submit", async ev=>{
+  ev.preventDefault();
+  const name = $("#lName").value.trim(), phone = $("#lPhone").value.trim(), email = $("#lEmail").value.trim();
+  if(!name){ leadError("Enter the name of the person."); $("#lName").focus(); return; }
+  if(!phone && !email){ leadError("Enter a phone number or an email."); $("#lPhone").focus(); return; }
+  const btn = $("#leadSave"); btn.disabled = true; btn.textContent = "Saving…";
+  try{
+    const r = await api("lead_create", {
+      request_id:S.requestId, full_name:name, phone, email,
+      source:$("#lSource").value, destination:$("#lDest").value.trim(), travel_start:$("#lDate").value,
+      adults:$("#lAdults").value, children:$("#lKids").value, budget:$("#lBudget").value, message:$("#lMsg").value.trim()
+    });
+    sheet.close();
+    const dup = r.possible_duplicates ? ` ${r.possible_duplicates} other lead${r.possible_duplicates===1?" has":"s have"} the same phone or email.` : "";
+    toast((r.created ? "Saved as " : "Already saved as ") + r.lead.lead_no + "." + dup);
+    try{ S.boot = await api("bootstrap"); S.me = S.boot.me; }catch(e){}
+    showTab("leads");
+  }catch(e){
+    if(e.code==="signed_out"){ sheet.close(); gateSignIn(); return; }
+    leadError(e.message);
+  }finally{ btn.disabled = false; btn.textContent = "Save lead"; }
+});
+$("#leadCancel").addEventListener("click", ()=>sheet.close());
+
+// ---------------------------------------------------------------- events
+let qTimer = 0;
+document.addEventListener("click", e=>{
+  const tab = e.target.closest("[data-tab]"); if(tab){ showTab(tab.dataset.tab); return; }
+  if(e.target.closest("[data-add]")){ openLeadSheet(); return; }
+  if(e.target.closest("[data-retry]")){ loadLeads(); return; }
+  const st = e.target.closest("[data-stage]"); if(st){ S.status = st.dataset.stage; S.q = ""; showTab("leads"); return; }
+});
+document.addEventListener("input", e=>{
+  if(e.target.id==="q"){ S.q = e.target.value.trim(); clearTimeout(qTimer); qTimer = setTimeout(loadLeads, 350); }
+});
+document.addEventListener("change", e=>{
+  if(e.target.id==="fStatus"){ S.status = e.target.value; loadLeads(); }
+});
+
+boot();
+</script>
+</body>
+</html>
