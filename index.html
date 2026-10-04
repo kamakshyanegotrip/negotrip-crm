@@ -553,6 +553,7 @@ const EVENT_TEXT = {
   "lead.assigned": d=>d.to_name ? "Given to " + d.to_name + (d.rule==="round_robin" ? " (next in turn)" : d.rule==="claimed" ? " (taken)" : "") : "Owner removed",
   "lead.status_changed": d=>"Stage: " + (STATUS[d.from] || d.from) + " → " + (STATUS[d.to] || d.to) + (d.reason ? ". " + d.reason : ""),
   "lead.updated": d=>"Details changed: " + (d.fields || []).join(", "),
+  "lead.ai_scored": d=>"AI read the request and rated it " + (d.ai_score ?? "") + " out of 100" + (d.reason ? ": " + d.reason : ""),
   "lead.merged_from": d=>(d.lead_no || "Another lead") + " was merged into this lead",
   "duplicate.decided": d=>d.decision==="merge" ? "Merged into " + (d.other_lead_no || "another lead") : "Marked as not a duplicate of " + (d.other_lead_no || "another lead"),
   "note.added": d=>"Note added" + (d.preview ? ": " + d.preview : ""),
@@ -569,6 +570,7 @@ const EVENT_TEXT = {
   "traveller.removed": d=>"Traveller removed: " + (d.name || "")
 };
 function timeline(events){
+  events = events.filter(e=>e.type !== "lead.ai_failed");
   if(!events.length) return `<p class="muted">Nothing yet.</p>`;
   return `<ul class="list">${events.map(e=>{
     const f = EVENT_TEXT[e.type];
@@ -593,6 +595,7 @@ function renderLead(){
   const wa = (l.whatsapp_e164 || l.phone_e164 || "").replace(/[^0-9]/g, "");
   const pending = d.duplicates.filter(x=>x.status==="pending");
   const factors = (d.score && d.score.factors) || {};
+  const ai = (d.timeline.find(e=>e.type==="lead.ai_scored") || {}).detail || null;
   const stageCtl = can
     ? `<select id="leadStage" aria-label="Stage">${Object.keys(STATUS).filter(k=>k!=="duplicate").map(k=>`<option value="${k}" ${l.status===k?"selected":""}>${esc(STATUS[k])}</option>`).join("")}</select>`
     : `<div>${stagePill(l.status)}</div>`;
@@ -653,7 +656,8 @@ function renderLead(){
           <div class="rowbtw" style="align-items:center;margin-bottom:8px"><span class="scorebig num">${esc(l.score ?? 0)}</span>${tempPill(l.temperature)}</div>
           ${Object.keys(FACTOR).map(k=>`<div class="factor"><span class="${factors[k] ? "" : "muted"}">${esc(FACTOR[k])}</span><b class="${factors[k] ? "" : "muted"}">${factors[k] ? "+" + esc(factors[k]) : "0"}</b></div>`).join("")}
           ${d.score && d.score.ai_score != null ? `<div class="factor"><span>AI reading of the request</span><b>${esc(d.score.ai_score)}</b></div>` : ""}
-          <p class="muted small" style="margin:8px 0 0">Out of 100. Hot from 60, warm from 35.</p>
+          <p class="muted small" style="margin:8px 0 0">Out of 100. Hot from 60, warm from 35.${d.score && d.score.ai_score != null ? " The AI reading counts for a quarter." : ""}</p>
+          ${ai && (ai.reason || (ai.missing || []).length) ? `<div class="quote" style="white-space:normal">${ai.reason ? `<div>${esc(ai.reason)}</div>` : ""}${(ai.missing || []).length ? `<div class="sub" style="margin-top:6px">Still to ask: ${esc(ai.missing.join("; "))}</div>` : ""}</div>` : ""}
         </div>
         ${d.customer ? `<div class="card">
           <h2>Customer</h2>
