@@ -50,45 +50,59 @@ button,input,select,textarea{font:inherit;color:inherit}
 .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
 h1{font-family:var(--display);font-weight:800;font-size:clamp(26px,5vw,34px);line-height:1;margin:2px 0 0;letter-spacing:-.02em}
 h2{font-family:var(--display);font-weight:600;font-size:19px;margin:0 0 10px;letter-spacing:-.01em}
+h3{font-size:13px;font-weight:700;margin:0 0 8px;color:var(--ink-2);text-transform:uppercase;letter-spacing:.05em}
 .me{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);flex-wrap:wrap}
 .me a{font-weight:600;color:var(--ink);text-decoration:none;border:1px solid var(--line);background:var(--surface);border-radius:9px;padding:6px 10px}
 
-.tabs{display:flex;gap:6px;margin-bottom:16px;border-bottom:1px solid var(--line)}
-.tab{border:0;background:none;padding:10px 14px;font-weight:600;color:var(--ink-2);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
-.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+.tabs{display:flex;gap:2px;margin-bottom:16px;border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{padding:10px 14px;font-weight:600;color:var(--ink-2);text-decoration:none;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap}
+.tab[aria-current="page"]{color:var(--ink);border-bottom-color:var(--accent)}
+.tab .count{font-family:var(--mono);font-size:10.5px;background:var(--accent);color:var(--accent-ink);border-radius:999px;padding:1px 6px;margin-left:4px;vertical-align:1px}
 
 .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--shadow)}
 .card + .card{margin-top:14px}
+.cardhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+.cardhead h2{margin:0}
 .muted{color:var(--ink-2)}
 .small{font-size:12.5px}
 
 .tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:14px}
 @media (max-width:760px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.tile{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:var(--shadow)}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:var(--shadow);text-align:left;cursor:pointer;width:100%;display:block}
 .tile .lab{font-size:12.5px;color:var(--ink-2);font-weight:600}
 .tile .val{font-family:var(--display);font-weight:800;font-size:30px;line-height:1.1;margin-top:4px}
+.tile.alert .val{color:var(--danger)}
 
 .stages{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
 .stage{display:flex;justify-content:space-between;align-items:center;gap:8px;border:1px solid var(--line);border-radius:10px;padding:9px 12px;background:var(--bg);cursor:pointer;text-align:left;width:100%}
 .stage b{font-variant-numeric:tabular-nums}
 
-.field{margin-bottom:12px}
+.field{margin-bottom:12px;min-width:0}
 .field label{display:block;font-size:13px;font-weight:600;margin-bottom:5px}
 .field .hint{font-size:12px;color:var(--ink-2);margin-top:4px}
-input[type=text],input[type=tel],input[type=email],input[type=date],input[type=number],input[type=search],select,textarea{width:100%;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font-size:15px;padding:10px 12px}
-input[type=text],input[type=tel],input[type=email],input[type=date],input[type=number],input[type=search],select{height:44px;padding-block:0}
+input[type=text],input[type=tel],input[type=email],input[type=date],input[type=datetime-local],input[type=number],input[type=search],select,textarea{width:100%;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font-size:15px;padding:10px 12px}
+input[type=text],input[type=tel],input[type=email],input[type=date],input[type=datetime-local],input[type=number],input[type=search],select{height:44px;padding-block:0}
 textarea{min-height:74px;resize:vertical;line-height:1.4}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}
+.fgrid .wide{grid-column:1/-1}
+@media (max-width:520px){.fgrid{grid-template-columns:1fr}}
 .btn{height:44px;padding:0 18px;border-radius:11px;border:0;background:var(--accent);color:var(--accent-ink);font-weight:600;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;white-space:nowrap}
 .btn.ghost{background:var(--surface-2);color:var(--ink)}
+.btn.sm{height:36px;padding:0 12px;font-size:13.5px;border-radius:9px}
 .btn:disabled{opacity:.5;cursor:default}
+.link{border:0;background:none;padding:0;color:var(--accent);font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:2px;font-size:13.5px}
+.link.quiet{color:var(--ink-2)}
 
 .bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
 .bar .grow{flex:1 1 220px;min-width:0}
-.bar select{width:auto;min-width:170px}
+.bar select{width:auto;min-width:150px;flex:1 1 150px;max-width:220px}
+@media (max-width:520px){.bar select{max-width:none}}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--bg);flex-wrap:wrap}
+.seg button{border:0;background:none;padding:8px 12px;font-weight:600;font-size:13.5px;color:var(--ink-2);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
 
-.pill{font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;border-radius:999px;padding:2px 8px;background:var(--surface-2);color:var(--ink-2);white-space:nowrap}
+.pill{font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;border-radius:999px;padding:2px 8px;background:var(--surface-2);color:var(--ink-2);white-space:nowrap;display:inline-block}
 .pill.ok{background:color-mix(in srgb,var(--ok) 18%,transparent);color:var(--ok)}
 .pill.warn{background:color-mix(in srgb,var(--warn) 20%,transparent);color:var(--warn)}
 .pill.bad{background:color-mix(in srgb,var(--danger) 16%,transparent);color:var(--danger)}
@@ -99,23 +113,62 @@ table{width:100%;border-collapse:collapse;font-size:14px;min-width:760px}
 th{font-size:12px;text-align:left;color:var(--ink-2);font-weight:600;padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
 td{padding:10px;border-bottom:1px solid var(--line);vertical-align:top}
 tr:last-child td{border-bottom:0}
-td .sub{font-size:12.5px;color:var(--ink-2)}
-td .no{font-family:var(--mono);font-size:11.5px}
+td .sub,.sub{font-size:12.5px;color:var(--ink-2)}
+.sub.over{color:var(--danger);font-weight:600}
+td .no,.no{font-family:var(--mono);font-size:11.5px}
+td a.name{font-weight:700;text-decoration:none}
+td a.name:hover{text-decoration:underline}
 @media (max-width:700px){
   .tablewrap{overflow:visible;margin:0;padding:0}
   table{min-width:0}
   thead{display:none}
   tr{display:block;border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:8px;background:var(--bg)}
   td{display:block;border:0;padding:2px 0}
+  td:empty{display:none}
 }
 
-.empty{text-align:center;padding:36px 18px}
+.back{display:inline-block;margin-bottom:10px;font-weight:600;font-size:13.5px;color:var(--ink-2);text-decoration:none}
+.head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.head .title{font-family:var(--display);font-weight:800;font-size:clamp(22px,4.5vw,28px);line-height:1.1;letter-spacing:-.02em;margin:0;overflow-wrap:anywhere}
+.head .pills{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.cols{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:14px;align-items:start}
+@media (max-width:900px){.cols{grid-template-columns:minmax(0,1fr)}}
+.kv{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px 16px;margin:0}
+.kv div{min-width:0}
+.kv dt{font-size:12px;color:var(--ink-2);font-weight:600}
+.kv dd{margin:1px 0 0;overflow-wrap:anywhere}
+.quote{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-top:12px;white-space:pre-wrap;overflow-wrap:anywhere}
+.next{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:color-mix(in srgb,var(--gold) 14%,transparent);border-radius:10px;padding:10px 12px;margin-bottom:12px;font-weight:600}
+.acts{display:flex;gap:8px;flex-wrap:wrap}
+.ctl{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:520px){.ctl{grid-template-columns:1fr}}
+
+ul.list{list-style:none;margin:0;padding:0}
+ul.list > li{padding:10px 0;border-bottom:1px solid var(--line)}
+ul.list > li:last-child{border-bottom:0;padding-bottom:0}
+ul.list > li:first-child{padding-top:0}
+.task{display:flex;gap:10px;align-items:flex-start}
+.task .tbody{flex:1;min-width:0}
+.task .ttitle{font-weight:600;overflow-wrap:anywhere}
+.task.done .ttitle{text-decoration:line-through;color:var(--ink-2);font-weight:500}
+.tick{width:26px;height:26px;border-radius:8px;border:2px solid var(--line);background:var(--bg);cursor:pointer;flex:none;display:grid;place-items:center;font-size:14px;line-height:1;color:var(--ok);margin-top:1px;padding:0}
+.tick:hover{border-color:var(--ok)}
+.tl{position:relative;padding-left:18px!important}
+.tl::before{content:"";position:absolute;left:3px;top:17px;width:7px;height:7px;border-radius:50%;background:var(--line)}
+ul.list > li.tl:first-child::before{top:7px}
+.note{white-space:pre-wrap;overflow-wrap:anywhere}
+.rowbtw{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.factor{display:flex;justify-content:space-between;gap:8px;padding:4px 0;font-size:13.5px}
+.factor b{font-variant-numeric:tabular-nums}
+.scorebig{font-family:var(--display);font-weight:800;font-size:34px;line-height:1}
+
+.empty{text-align:center;padding:30px 18px}
 .gate{min-height:70vh;display:grid;place-items:center}
 .gate .card{max-width:440px;text-align:center;padding:28px 22px}
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:24px;z-index:40;background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;font-size:14px;max-width:calc(100% - 32px)}
 .err{color:var(--danger);font-size:13.5px;margin:0 0 10px}
 
-dialog{border:1px solid var(--line);border-radius:18px;padding:0;background:var(--surface);color:var(--ink);width:min(560px,calc(100% - 24px));max-height:calc(100vh - 32px)}
+dialog{border:1px solid var(--line);border-radius:18px;padding:0;background:var(--surface);color:var(--ink);width:min(580px,calc(100% - 24px));max-height:calc(100vh - 32px)}
 dialog::backdrop{background:var(--scrim)}
 .sheet{padding:20px}
 .sheet .actions{display:flex;gap:8px;justify-content:flex-end;margin-top:6px}
@@ -133,29 +186,15 @@ dialog::backdrop{background:var(--scrim)}
   <main id="app"><div class="gate"><p class="muted">Loading…</p></div></main>
 </div>
 
-<dialog id="leadSheet" aria-labelledby="leadTitle">
-  <form class="sheet" id="leadForm" novalidate>
-    <h2 id="leadTitle">Add a lead</h2>
-    <p class="err" id="leadErr" role="alert" hidden></p>
-    <div class="field"><label for="lName">Name</label><input type="text" id="lName" maxlength="120" autocomplete="off" required></div>
-    <div class="row2">
-      <div class="field"><label for="lPhone">Phone</label><input type="tel" id="lPhone" maxlength="30" autocomplete="off" placeholder="10 digits, or +country code"></div>
-      <div class="field"><label for="lEmail">Email</label><input type="email" id="lEmail" maxlength="160" autocomplete="off"></div>
-    </div>
-    <div class="row2">
-      <div class="field"><label for="lSource">Where it came from</label><select id="lSource"></select></div>
-      <div class="field"><label for="lDest">Destination</label><input type="text" id="lDest" maxlength="120" autocomplete="off" placeholder="e.g. Puri, Konark"></div>
-    </div>
-    <div class="row3">
-      <div class="field"><label for="lDate">Travel date</label><input type="date" id="lDate"></div>
-      <div class="field"><label for="lAdults">Adults</label><input type="number" id="lAdults" min="0" max="500" inputmode="numeric"></div>
-      <div class="field"><label for="lKids">Children</label><input type="number" id="lKids" min="0" max="500" inputmode="numeric"></div>
-    </div>
-    <div class="field"><label for="lBudget">Budget in rupees <span class="muted">(optional)</span></label><input type="number" id="lBudget" min="0" inputmode="numeric"></div>
-    <div class="field"><label for="lMsg">What they asked for <span class="muted">(optional)</span></label><textarea id="lMsg" maxlength="2000"></textarea></div>
+<dialog id="dlg" aria-labelledby="dlgTitle">
+  <form class="sheet" id="dlgForm" novalidate>
+    <h2 id="dlgTitle"></h2>
+    <p class="muted" id="dlgIntro" hidden></p>
+    <p class="err" id="dlgErr" role="alert" hidden></p>
+    <div class="fgrid" id="dlgFields"></div>
     <div class="actions">
-      <button type="button" class="btn ghost" id="leadCancel">Cancel</button>
-      <button type="submit" class="btn" id="leadSave">Save lead</button>
+      <button type="button" class="btn ghost" id="dlgCancel">Cancel</button>
+      <button type="submit" class="btn" id="dlgSave">Save</button>
     </div>
   </form>
 </dialog>
@@ -175,11 +214,17 @@ const STATUS = {
   quoted:"Quoted", negotiating:"Negotiating", won:"Won", lost:"Lost", dormant:"Dormant", duplicate:"Duplicate"
 };
 const STATUS_TONE = { new:"acc", won:"ok", lost:"bad", negotiating:"warn", quoted:"warn" };
+const TEMP = { hot:["Hot","bad"], warm:["Warm","warn"], cold:["Cold",""] };
 const ROLE = {
   super_admin:"Owner", company_admin:"Company admin", branch_manager:"Branch manager", sales_manager:"Sales manager",
   sales_executive:"Sales executive", operations:"Operations", accounts:"Accounts", marketing:"Marketing",
   supplier_manager:"Supplier manager", read_only:"View only"
 };
+const TASK_TYPE = { call:"Call", follow_up:"Follow up", payment:"Payment", document:"Document", supplier_confirmation:"Supplier confirmation", visa:"Visa", booking:"Booking", travel:"Travel", other:"Other" };
+const PRIORITY = { low:"Low", normal:"Normal", high:"High", urgent:"Urgent" };
+const FACTOR = { travel_date:"Travel date is close", budget:"Budget", group_size:"Group size", source:"Where it came from", repeat_customer:"Booked with us before", business:"Agent or company", destination_known:"Destination known", phone_and_email:"Phone and email given" };
+const KIND = { individual:"Person", company:"Company", agent:"Travel agent" };
+const CHANNEL = { whatsapp:"WhatsApp", email:"Email", sms:"SMS", call:"Phone call" };
 
 const sb = window.supabase && window.supabase.createClient
   ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {auth:{persistSession:true, autoRefreshToken:true, detectSessionInUrl:false}})
@@ -188,7 +233,7 @@ const sb = window.supabase && window.supabase.createClient
 // ---------------------------------------------------------------- helpers
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-function toast(msg){ const t=$("#toast"); t.textContent=msg; t.hidden=false; clearTimeout(toast._t); toast._t=setTimeout(()=>t.hidden=true, 3500); }
+function toast(msg){ const t=$("#toast"); t.textContent=msg; t.hidden=false; clearTimeout(toast._t); toast._t=setTimeout(()=>t.hidden=true, 3800); }
 function day(iso){
   if(!iso) return "";
   const d = new Date(String(iso).length===10 ? iso+"T00:00:00" : iso);
@@ -197,10 +242,43 @@ function day(iso){
   if(d.getFullYear() !== new Date().getFullYear()) opt.year = "numeric";
   return d.toLocaleDateString("en-IN", opt);
 }
+function when(iso){
+  const d = new Date(iso); if(!iso || isNaN(d)) return "";
+  return day(iso) + ", " + d.toLocaleTimeString("en-IN", {hour:"numeric", minute:"2-digit"});
+}
+function span(ms){
+  const m = Math.round(Math.abs(ms)/60000);
+  if(m < 60) return m + " min";
+  const h = Math.round(m/60);
+  if(h < 48) return h + " h";
+  return Math.round(h/24) + " days";
+}
+function isLive(t){ return t.status==="open" || t.status==="in_progress"; }
+function dueText(t){
+  if(t.status==="done") return "Done";
+  if(t.status==="cancelled") return "Cancelled";
+  if(!t.due_at) return "No due date";
+  const diff = new Date(t.due_at) - Date.now();
+  return diff < 0 ? "Overdue by " + span(diff) : "Due in " + span(diff) + " · " + when(t.due_at);
+}
+function localInput(d){
+  if(!(d instanceof Date)) d = new Date(d);
+  if(isNaN(d)) return "";
+  const p = n => String(n).padStart(2,"0");
+  return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}`;
+}
+function rupees(n){ return n==null || n==="" ? "" : "₹" + Number(n).toLocaleString("en-IN", {maximumFractionDigits:0}); }
 function newId(){
   if(window.crypto && crypto.randomUUID) return crypto.randomUUID();
   return "r-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 12);
 }
+function pax(l){
+  return [l.pax_adults ? l.pax_adults+" adult"+(l.pax_adults===1?"":"s") : "", l.pax_children ? l.pax_children+" child"+(l.pax_children===1?"":"ren") : "", l.pax_infants ? l.pax_infants+" infant"+(l.pax_infants===1?"":"s") : ""].filter(Boolean).join(", ");
+}
+function stagePill(s){ return `<span class="pill ${STATUS_TONE[s] || ""}">${esc(STATUS[s] || s)}</span>`; }
+function tempPill(t, score){ if(!t) return ""; const x = TEMP[t] || [t,""]; return `<span class="pill ${x[1]}">${esc(x[0])}${score!=null ? " · "+esc(score) : ""}</span>`; }
+function kv(pairs){ const rows = pairs.filter(p=>p[1]!=null && p[1]!==""); return rows.length ? `<dl class="kv">${rows.map(p=>`<div><dt>${esc(p[0])}</dt><dd>${p[2] ? p[1] : esc(p[1])}</dd></div>`).join("")}</dl>` : `<p class="muted">Nothing recorded yet.</p>`; }
+function list(str){ return String(str || "").split(",").map(s=>s.trim()).filter(Boolean); }
 
 // ---------------------------------------------------------------- API
 async function token(){
@@ -217,9 +295,19 @@ async function api(action, payload={}){
   const code = (data && data.error) || (r.status===401 ? "signed_out" : "server_error");
   throw Object.assign(new Error((data && data.message) || ("The server answered "+r.status+".")), {code, status:r.status});
 }
+function fail(e){
+  if(e && e.code==="signed_out"){ S.me = null; gateSignIn(); return; }
+  toast((e && e.message) || "That did not work.");
+}
 
 // ---------------------------------------------------------------- state
-const S = { me:null, boot:null, tab:"dashboard", leads:[], status:"", q:"", loadingLeads:false, leadsErr:"", requestId:"" };
+const S = {
+  me:null, boot:null, route:{name:"dashboard", id:""},
+  lf:{status:"", temperature:"", owner:"", q:""}, leads:[], leadsTotal:0,
+  tf:{when:"open", scope:"mine"}, cq:"",
+  lead:null, customer:null, dashTasks:null, tasks:{}
+};
+let viewSeq = 0;
 
 // ---------------------------------------------------------------- boot
 async function boot(){
@@ -236,145 +324,714 @@ async function boot(){
   }
   $("#me").innerHTML = `<span>${esc(S.me.name || S.me.email)} · ${esc(ROLE[S.me.role] || S.me.role)}</span><a href="${esc(HQ_URL)}">← HQ</a>`;
   renderShell();
+  route();
 }
 function gate(title, msg){ $("#app").innerHTML = `<div class="gate"><div class="card"><h2>${esc(title)}</h2><p class="muted">${esc(msg)}</p><a class="btn" href="${esc(HQ_URL)}">Open NegoTrip HQ</a></div></div>`; }
 function gateSignIn(){ $("#app").innerHTML = `<div class="gate"><div class="card"><h2>Sign in first</h2><p class="muted">The CRM uses your NegoTrip HQ sign-in. Sign in there with your Google account, then come back to this page.</p><a class="btn" href="${esc(HQ_URL)}">Sign in at NegoTrip HQ</a></div></div>`; }
-if(sb) sb.auth.onAuthStateChange(ev=>{ if(ev==="SIGNED_OUT") gateSignIn(); });
+if(sb) sb.auth.onAuthStateChange(ev=>{ if(ev==="SIGNED_OUT"){ S.me = null; gateSignIn(); } });
 
-// ---------------------------------------------------------------- shell
+// ---------------------------------------------------------------- shell and routes
+const TABS = [["dashboard","Dashboard"],["leads","Leads"],["tasks","Tasks"],["customers","Customers"],["team","Team"]];
+const TAB_OF = { lead:"leads", customer:"customers" };
 function renderShell(){
-  $("#app").innerHTML = `
-    <div class="tabs" role="tablist">
-      <button class="tab" role="tab" data-tab="dashboard">Dashboard</button>
-      <button class="tab" role="tab" data-tab="leads">Leads</button>
-    </div>
-    <section id="view"></section>`;
-  showTab(S.tab);
+  $("#app").innerHTML = `<nav class="tabs" aria-label="CRM sections" id="tabs"></nav><section id="view"></section>`;
+  renderTabs();
 }
-function showTab(tab){
-  S.tab = tab;
-  document.querySelectorAll(".tab").forEach(b=>b.setAttribute("aria-selected", String(b.dataset.tab===tab)));
-  if(tab==="leads"){ renderLeads(); loadLeads(); } else renderDashboard();
+function renderTabs(){
+  const cur = TAB_OF[S.route.name] || S.route.name;
+  const b = S.boot || {};
+  $("#tabs").innerHTML = TABS.filter(t=>t[0]!=="team" || S.me.is_admin).map(t=>{
+    const n = t[0]==="tasks" ? b.my_overdue_tasks : 0;
+    return `<a class="tab" href="#/${t[0]}" ${cur===t[0] ? 'aria-current="page"' : ""}>${esc(t[1])}${n ? `<span class="count num" title="Overdue">${esc(n)}</span>` : ""}</a>`;
+  }).join("");
+}
+function parseRoute(){
+  const parts = location.hash.replace(/^#\/?/, "").split("/");
+  return { name: parts[0] || "dashboard", id: parts[1] || "" };
+}
+const VIEWS = { dashboard:viewDashboard, leads:viewLeads, lead:viewLead, tasks:viewTasks, customers:viewCustomers, customer:viewCustomer, team:viewTeam };
+function route(keepScroll){
+  if(!S.me) return;
+  S.route = parseRoute();
+  if(!VIEWS[S.route.name] || (S.route.name==="team" && !S.me.is_admin)) S.route = {name:"dashboard", id:""};
+  if(!$("#view")) renderShell();
+  renderTabs();
+  ++viewSeq;
+  VIEWS[S.route.name](S.route.id);
+  if(keepScroll !== true) window.scrollTo(0, 0);
+}
+function refresh(){ route(true); }
+window.addEventListener("hashchange", ()=>route());
+async function refreshBoot(){ try{ S.boot = await api("bootstrap"); S.me = S.boot.me; if($("#tabs")) renderTabs(); }catch(e){} }
+
+// ---------------------------------------------------------------- tasks (shared row)
+function taskRow(t, showLead, noEdit){
+  S.tasks[t.id] = t;
+  const live = isLive(t), over = live && t.due_at && new Date(t.due_at) < new Date();
+  const can = S.me.role !== "read_only";
+  const flags = [
+    live && (t.priority==="urgent" || t.priority==="high") ? `<span class="pill ${t.priority==="urgent"?"bad":"warn"}">${esc(PRIORITY[t.priority])}</span>` : "",
+    live && t.escalated_at ? `<span class="pill bad">Escalated</span>` : ""
+  ].join(" ");
+  const who = t.owner_name || "No owner";
+  const link = showLead && t.lead ? ` · <a href="#/lead/${esc(t.lead.id)}">${esc(t.lead.full_name || t.lead.lead_no)}</a>` : (showLead && t.customer ? ` · <a href="#/customer/${esc(t.customer.id)}">${esc(t.customer.full_name)}</a>` : "");
+  return `<li class="task ${live ? "" : "done"}">
+    ${can ? `<button class="tick" data-act="${live ? "taskDone" : "taskReopen"}" data-id="${esc(t.id)}" aria-label="${live ? "Mark done" : "Reopen"}: ${esc(t.title)}">${live ? "" : "✓"}</button>` : ""}
+    <div class="tbody">
+      <div class="ttitle">${esc(t.title)} ${flags}</div>
+      <div class="sub ${over ? "over" : ""}">${esc(TASK_TYPE[t.type] || t.type)} · ${esc(dueText(t))}<span class="muted" style="font-weight:400"> · ${esc(who)}${link}</span></div>
+      ${t.body ? `<div class="sub">${esc(t.body)}</div>` : ""}
+    </div>
+    ${can && live && !noEdit ? `<button class="link quiet" data-act="taskEdit" data-id="${esc(t.id)}">Edit</button>` : ""}
+  </li>`;
+}
+function ownerOptions(selected, withNone){
+  return (withNone ? `<option value="">No owner</option>` : "") + (S.boot.staff || []).map(s=>`<option value="${esc(s.id)}" ${s.id===selected ? "selected" : ""}>${esc(s.name)}${s.id===S.me.id ? " (me)" : ""}</option>`).join("");
+}
+function taskForm(t, ctx){
+  const editing = !!t;
+  const tomorrow = new Date(Date.now() + 864e5); tomorrow.setHours(10, 0, 0, 0);
+  const fields = [
+    {id:"title", label:"What needs doing", type:"text", value:editing ? t.title : "", wide:true, max:200},
+    {id:"type", label:"Kind", type:"select", value:editing ? t.type : "follow_up", options:Object.keys(TASK_TYPE).map(k=>[k, TASK_TYPE[k]])},
+    {id:"priority", label:"Priority", type:"select", value:editing ? t.priority : "normal", options:Object.keys(PRIORITY).map(k=>[k, PRIORITY[k]])},
+    {id:"due_at", label:"Due", type:"datetime-local", value:editing ? (t.due_at ? localInput(t.due_at) : "") : localInput(tomorrow)}
+  ];
+  if(S.me.is_manager) fields.push({id:"owner_staff_id", label:"For", type:"select", value:editing ? (t.owner_staff_id || S.me.id) : S.me.id, options:(S.boot.staff || []).map(s=>[s.id, s.name + (s.id===S.me.id ? " (me)" : "")])});
+  fields.push({id:"body", label:"Details", type:"textarea", value:editing ? (t.body || "") : "", wide:true, max:2000, optional:true});
+  openForm({
+    title: editing ? "Edit task" : "Add a task", submit: editing ? "Save task" : "Add task", fields,
+    onSubmit: async v=>{
+      if(!v.title) throw new Error("Say what needs doing.");
+      const due = v.due_at ? new Date(v.due_at).toISOString() : "";
+      if(editing){
+        const p = {};
+        if(v.title !== t.title) p.title = v.title;
+        if(v.type !== t.type) p.type = v.type;
+        if(v.priority !== t.priority) p.priority = v.priority;
+        if(v.body !== (t.body || "")) p.body = v.body;
+        if(v.due_at !== (t.due_at ? localInput(t.due_at) : "")) p.due_at = due;
+        if(v.owner_staff_id && v.owner_staff_id !== t.owner_staff_id) p.owner_staff_id = v.owner_staff_id;
+        if(!Object.keys(p).length) return;
+        await api("task_update", {id:t.id, ...p});
+      }else{
+        const p = { title:v.title, type:v.type, priority:v.priority, body:v.body, due_at:due };
+        if(v.owner_staff_id) p.owner_staff_id = v.owner_staff_id;
+        await api("task_create", {...p, ...(ctx || {})});
+      }
+      toast(editing ? "Task saved." : "Task added.");
+      refreshBoot(); refresh();
+    }
+  });
 }
 
+// ---------------------------------------------------------------- dashboard
+function viewDashboard(){
+  renderDashboard();
+  const seq = viewSeq;
+  Promise.all([api("bootstrap"), api("tasks_list", {scope:"mine", when:"open", limit:6})]).then(r=>{
+    S.boot = r[0]; S.me = r[0].me; S.dashTasks = r[1].tasks || [];
+    if(seq === viewSeq){ renderTabs(); renderDashboard(); }
+  }).catch(fail);
+}
 function renderDashboard(){
   const b = S.boot, c = b.lead_counts || {};
-  const canAdd = S.me.role !== "read_only";
   const tiles = [
-    ["Leads in total", b.leads_total],
-    ["Added in the last 7 days", b.leads_last_7_days],
-    ["New, not yet contacted", c.new || 0],
-    ["My open tasks", b.my_open_tasks]
+    ["Open leads", b.leads_open, {status:"open"}, ""],
+    ["Hot leads", b.leads_hot, {status:"open", temperature:"hot"}, ""],
+    ["Leads with no owner", b.leads_unassigned, {status:"open", owner:"unassigned"}, b.leads_unassigned ? "alert" : ""],
+    ["New, not yet contacted", c.new || 0, {status:"new"}, ""]
   ];
+  const tasks = S.dashTasks;
   $("#view").innerHTML = `
-    <div class="tiles">${tiles.map(t=>`<div class="tile"><div class="lab">${esc(t[0])}</div><div class="val num">${esc(t[1] ?? 0)}</div></div>`).join("")}</div>
-    <div class="card">
-      <h2>Leads by stage</h2>
-      ${b.leads_total
-        ? `<div class="stages">${Object.keys(STATUS).map(k=>`<button class="stage" data-stage="${k}"><span>${esc(STATUS[k])}</span><b>${esc(c[k] || 0)}</b></button>`).join("")}</div>`
-        : `<div class="empty"><p class="muted">No leads yet.</p>${canAdd ? `<button class="btn" data-add>Add the first lead</button>` : ""}</div>`}
+    <div class="tiles">${tiles.map(t=>`<button class="tile ${t[3]}" data-act="leadFilter" data-filter="${esc(JSON.stringify(t[2]))}"><div class="lab">${esc(t[0])}</div><div class="val num">${esc(t[1] ?? 0)}</div></button>`).join("")}</div>
+    <div class="cols">
+      <div>
+        <div class="card">
+          <div class="cardhead"><h2>My tasks</h2><div class="acts">${b.my_overdue_tasks ? `<span class="pill bad">${esc(b.my_overdue_tasks)} overdue</span>` : ""}<a class="link" href="#/tasks">See all ${esc(b.my_open_tasks || 0)}</a></div></div>
+          ${tasks==null ? `<p class="muted">Loading…</p>` : tasks.length ? `<ul class="list">${tasks.map(t=>taskRow(t, true)).join("")}</ul>` : `<p class="muted">Nothing waiting for you.</p>`}
+        </div>
+        <div class="card">
+          <div class="cardhead"><h2>Leads by stage</h2>${S.me.can_edit ? `<button class="btn sm" data-act="leadAdd">Add lead</button>` : ""}</div>
+          ${b.leads_total
+            ? `<div class="stages">${Object.keys(STATUS).map(k=>`<button class="stage" data-act="leadFilter" data-filter="${esc(JSON.stringify({status:k}))}"><span>${esc(STATUS[k])}</span><b>${esc(c[k] || 0)}</b></button>`).join("")}</div>`
+            : `<div class="empty"><p class="muted">No leads yet. Add the first one, or connect a lead source.</p></div>`}
+        </div>
+      </div>
+      <aside>
+        <div class="card">
+          <h2>At a glance</h2>
+          <div class="factor"><span>Leads in total</span><b>${esc(b.leads_total || 0)}</b></div>
+          <div class="factor"><span>Added in the last 7 days</span><b>${esc(b.leads_last_7_days || 0)}</b></div>
+          <div class="factor"><span>Won</span><b>${esc(c.won || 0)}</b></div>
+          <div class="factor"><span>Possible duplicates to check</span><b>${esc(b.duplicates_pending || 0)}</b></div>
+        </div>
+      </aside>
     </div>`;
 }
 
-function renderLeads(){
-  const canAdd = S.me.role !== "read_only";
+// ---------------------------------------------------------------- leads list
+function viewLeads(){
+  const f = S.lf;
+  const owners = [["","All owners"],["me","My leads"],["unassigned","No owner"]].concat(S.me.is_manager ? (S.boot.staff || []).filter(s=>s.id!==S.me.id).map(s=>[s.id, s.name]) : []);
   $("#view").innerHTML = `
     <div class="card">
       <div class="bar">
-        <div class="grow"><input type="search" id="q" placeholder="Search name, phone, email, destination or lead number" value="${esc(S.q)}" aria-label="Search leads"></div>
-        <select id="fStatus" aria-label="Stage"><option value="">All stages</option>${Object.keys(STATUS).map(k=>`<option value="${k}" ${S.status===k?"selected":""}>${esc(STATUS[k])}</option>`).join("")}</select>
-        ${canAdd ? `<button class="btn" data-add>Add lead</button>` : ""}
+        <div class="grow"><input type="search" id="q" placeholder="Search name, phone, email, destination or lead number" value="${esc(f.q)}" aria-label="Search leads"></div>
+        ${S.me.can_edit ? `<button class="btn" data-act="leadAdd">Add lead</button>` : ""}
       </div>
-      <div id="leadList"></div>
+      <div class="bar">
+        <select id="fStatus" aria-label="Stage"><option value="">All stages</option><option value="open" ${f.status==="open"?"selected":""}>All open</option>${Object.keys(STATUS).map(k=>`<option value="${k}" ${f.status===k?"selected":""}>${esc(STATUS[k])}</option>`).join("")}</select>
+        <select id="fTemp" aria-label="Heat"><option value="">Any heat</option>${Object.keys(TEMP).map(k=>`<option value="${k}" ${f.temperature===k?"selected":""}>${esc(TEMP[k][0])}</option>`).join("")}</select>
+        <select id="fOwner" aria-label="Owner">${owners.map(o=>`<option value="${esc(o[0])}" ${f.owner===o[0]?"selected":""}>${esc(o[1])}</option>`).join("")}</select>
+      </div>
+      <div id="leadList"><p class="muted empty">Loading leads…</p></div>
     </div>`;
-  renderLeadList();
+  loadLeads();
 }
-function renderLeadList(){
-  const host = $("#leadList"); if(!host) return;
-  if(S.loadingLeads && !S.leads.length){ host.innerHTML = `<p class="muted empty">Loading leads…</p>`; return; }
-  if(S.leadsErr){ host.innerHTML = `<div class="empty"><p class="err">${esc(S.leadsErr)}</p><button class="btn ghost" data-retry>Try again</button></div>`; return; }
-  if(!S.leads.length){
-    host.innerHTML = `<p class="muted empty">${S.q || S.status ? "No leads match this search." : "No leads yet."}</p>`; return;
-  }
-  host.innerHTML = `<div class="tablewrap"><table>
-    <thead><tr><th>Name</th><th>Contact</th><th>Trip</th><th>From</th><th>Owner</th><th>Stage</th><th>Added</th></tr></thead>
-    <tbody>${S.leads.map(l=>{
-      const pax = [l.pax_adults ? l.pax_adults+" adult"+(l.pax_adults===1?"":"s") : "", l.pax_children ? l.pax_children+" child"+(l.pax_children===1?"":"ren") : ""].filter(Boolean).join(", ");
-      const trip = [l.destination_text, day(l.travel_start)].filter(Boolean).join(" · ");
-      return `<tr>
-        <td><b>${esc(l.full_name || "No name")}</b><div class="sub no">${esc(l.lead_no)}</div></td>
-        <td>${l.phone_e164 ? `<a href="tel:${esc(l.phone_e164)}">${esc(l.phone_e164)}</a>` : ""}${l.email ? `<div class="sub">${esc(l.email)}</div>` : ""}</td>
-        <td>${esc(trip)}${pax ? `<div class="sub">${esc(pax)}</div>` : ""}</td>
-        <td>${esc(l.source)}</td>
-        <td>${esc(l.owner_name || "Unassigned")}</td>
-        <td><span class="pill ${STATUS_TONE[l.status] || ""}">${esc(STATUS[l.status] || l.status)}</span></td>
-        <td class="num">${esc(day(l.created_at))}</td>
-      </tr>`; }).join("")}</tbody></table></div>`;
-}
-let leadSeq = 0;
 async function loadLeads(){
-  const seq = ++leadSeq;
-  S.loadingLeads = true; S.leadsErr = ""; renderLeadList();
+  const seq = ++viewSeq, host = $("#leadList"), f = S.lf;
   try{
-    const r = await api("leads_list", {status:S.status, q:S.q, limit:100});
-    if(seq !== leadSeq) return;
-    S.leads = r.leads || [];
+    const r = await api("leads_list", {status:f.status, temperature:f.temperature, owner:f.owner, q:f.q, limit:100});
+    if(seq !== viewSeq || !$("#leadList")) return;
+    S.leads = r.leads || []; S.leadsTotal = r.total || 0;
   }catch(e){
-    if(seq !== leadSeq) return;
-    if(e.code==="signed_out"){ gateSignIn(); return; }
-    S.leadsErr = "Couldn't load leads. " + e.message;
+    if(seq !== viewSeq) return;
+    if(e.code==="signed_out"){ fail(e); return; }
+    if(host) host.innerHTML = `<div class="empty"><p class="err">Couldn't load leads. ${esc(e.message)}</p><button class="btn ghost" data-act="retry">Try again</button></div>`;
+    return;
   }
-  S.loadingLeads = false; renderLeadList();
+  const filtered = f.q || f.status || f.temperature || f.owner;
+  if(!S.leads.length){ $("#leadList").innerHTML = `<p class="muted empty">${filtered ? "No leads match this search." : "No leads yet."}</p>`; return; }
+  $("#leadList").innerHTML = `<div class="tablewrap"><table>
+    <thead><tr><th>Name</th><th>Contact</th><th>Trip</th><th>Heat</th><th>Owner</th><th>Stage</th><th>Added</th></tr></thead>
+    <tbody>${S.leads.map(l=>{
+      const trip = [l.destination_text, day(l.travel_start)].filter(Boolean).join(" · "), p = pax(l);
+      return `<tr>
+        <td><a class="name" href="#/lead/${esc(l.id)}">${esc(l.full_name || "No name")}</a><div class="sub"><span class="no">${esc(l.lead_no)}</span> · ${esc(l.source)}${l.duplicates_pending ? ` · <span class="pill warn">Possible duplicate</span>` : ""}</div></td>
+        <td>${l.phone_e164 ? `<a href="tel:${esc(l.phone_e164)}">${esc(l.phone_e164)}</a>` : ""}${l.email ? `<div class="sub">${esc(l.email)}</div>` : ""}</td>
+        <td>${esc(trip)}${p ? `<div class="sub">${esc(p)}</div>` : ""}</td>
+        <td>${tempPill(l.temperature, l.score)}</td>
+        <td>${esc(l.owner_name || "No owner")}</td>
+        <td>${stagePill(l.status)}</td>
+        <td class="num">${esc(day(l.created_at))}</td>
+      </tr>`; }).join("")}</tbody></table></div>
+    ${S.leadsTotal > S.leads.length ? `<p class="muted small" style="margin:10px 0 0">Showing the newest ${esc(S.leads.length)} of ${esc(S.leadsTotal)}. Search to narrow it down.</p>` : ""}`;
+}
+function leadAdd(){
+  const requestId = newId();
+  const fields = [
+    {id:"full_name", label:"Name", type:"text", wide:true, max:120},
+    {id:"phone", label:"Phone", type:"tel", max:30, placeholder:"10 digits, or +country code"},
+    {id:"email", label:"Email", type:"email", max:160, optional:true},
+    {id:"source", label:"Where it came from", type:"select", value:"phone", options:(S.boot.sources || []).map(s=>[s.code, s.name])},
+    {id:"destination", label:"Destination", type:"text", max:160, placeholder:"e.g. Puri, Konark", optional:true},
+    {id:"travel_start", label:"Travel date", type:"date", optional:true},
+    {id:"budget", label:"Budget in rupees", type:"number", optional:true},
+    {id:"adults", label:"Adults", type:"number", optional:true},
+    {id:"children", label:"Children", type:"number", optional:true}
+  ];
+  if(S.me.is_manager) fields.push({id:"assign", label:"Give it to", type:"select", wide:true, value:"", options:[["","Me"],["auto","Whoever is next in turn"]].concat((S.boot.staff || []).filter(s=>s.id!==S.me.id).map(s=>[s.id, s.name]))});
+  fields.push({id:"message", label:"What they asked for", type:"textarea", wide:true, max:4000, optional:true});
+  openForm({
+    title:"Add a lead", submit:"Save lead", fields,
+    onSubmit: async v=>{
+      if(!v.full_name) throw new Error("Enter the name of the person.");
+      if(!v.phone && !v.email) throw new Error("Enter a phone number or an email.");
+      const r = await api("lead_create", {request_id:requestId, ...v});
+      const n = r.possible_duplicates;
+      toast((r.created ? "Saved as " : "Already saved as ") + r.lead.lead_no + "." + (n ? ` ${n} other lead${n===1 ? " looks" : "s look"} like the same person.` : ""));
+      refreshBoot();
+      if(location.hash === "#/lead/" + r.lead.id) refresh(); else location.hash = "#/lead/" + r.lead.id;
+    }
+  });
 }
 
-// ---------------------------------------------------------------- add lead
-const sheet = $("#leadSheet"), form = $("#leadForm");
-function openLeadSheet(){
-  form.reset();
-  $("#leadErr").hidden = true;
-  $("#lSource").innerHTML = (S.boot.sources || []).map(s=>`<option value="${esc(s.code)}" ${s.code==="phone"?"selected":""}>${esc(s.name)}</option>`).join("");
-  S.requestId = newId();
-  sheet.showModal();
-  $("#lName").focus();
+// ---------------------------------------------------------------- lead page
+const EVENT_TEXT = {
+  "lead.received": d=>"Lead received" + (d.source_name ? " from " + d.source_name : ""),
+  "lead.assigned": d=>d.to_name ? "Given to " + d.to_name + (d.rule==="round_robin" ? " (next in turn)" : d.rule==="claimed" ? " (taken)" : "") : "Owner removed",
+  "lead.status_changed": d=>"Stage: " + (STATUS[d.from] || d.from) + " → " + (STATUS[d.to] || d.to) + (d.reason ? ". " + d.reason : ""),
+  "lead.updated": d=>"Details changed: " + (d.fields || []).join(", "),
+  "lead.merged_from": d=>(d.lead_no || "Another lead") + " was merged into this lead",
+  "duplicate.decided": d=>d.decision==="merge" ? "Merged into " + (d.other_lead_no || "another lead") : "Marked as not a duplicate of " + (d.other_lead_no || "another lead"),
+  "note.added": d=>"Note added" + (d.preview ? ": " + d.preview : ""),
+  "task.created": d=>"Task added: " + (d.title || "") + (d.for ? " (for " + d.for + ")" : ""),
+  "task.completed": d=>"Task done: " + (d.title || ""),
+  "task.reopened": d=>"Task reopened: " + (d.title || ""),
+  "task.cancelled": d=>"Task cancelled: " + (d.title || ""),
+  "task.started": d=>"Task started: " + (d.title || ""),
+  "task.updated": d=>"Task changed: " + (d.title || "") + ((d.fields || []).length ? " (" + d.fields.join(", ") + ")" : ""),
+  "task.escalated": d=>"Task overdue and escalated: " + (d.title || ""),
+  "customer.updated": d=>"Customer details changed: " + (d.fields || []).join(", "),
+  "traveller.added": d=>"Traveller added: " + (d.name || ""),
+  "traveller.updated": d=>"Traveller changed: " + (d.name || ""),
+  "traveller.removed": d=>"Traveller removed: " + (d.name || "")
+};
+function timeline(events){
+  if(!events.length) return `<p class="muted">Nothing yet.</p>`;
+  return `<ul class="list">${events.map(e=>{
+    const f = EVENT_TEXT[e.type];
+    return `<li class="tl"><div>${esc(f ? f(e.detail || {}) : e.type)}</div><div class="sub">${esc(when(e.at))}${e.by ? " · " + esc(e.by) : ""}</div></li>`;
+  }).join("")}</ul>`;
 }
-function leadError(msg){ const e=$("#leadErr"); e.textContent=msg; e.hidden=false; }
-form.addEventListener("submit", async ev=>{
-  ev.preventDefault();
-  const name = $("#lName").value.trim(), phone = $("#lPhone").value.trim(), email = $("#lEmail").value.trim();
-  if(!name){ leadError("Enter the name of the person."); $("#lName").focus(); return; }
-  if(!phone && !email){ leadError("Enter a phone number or an email."); $("#lPhone").focus(); return; }
-  const btn = $("#leadSave"); btn.disabled = true; btn.textContent = "Saving…";
+async function viewLead(id){
+  const seq = viewSeq;
+  if(!S.lead || S.lead.lead.id !== id) $("#view").innerHTML = `<p class="muted empty">Loading…</p>`;
   try{
-    const r = await api("lead_create", {
-      request_id:S.requestId, full_name:name, phone, email,
-      source:$("#lSource").value, destination:$("#lDest").value.trim(), travel_start:$("#lDate").value,
-      adults:$("#lAdults").value, children:$("#lKids").value, budget:$("#lBudget").value, message:$("#lMsg").value.trim()
-    });
-    sheet.close();
-    const dup = r.possible_duplicates ? ` ${r.possible_duplicates} other lead${r.possible_duplicates===1?" has":"s have"} the same phone or email.` : "";
-    toast((r.created ? "Saved as " : "Already saved as ") + r.lead.lead_no + "." + dup);
-    try{ S.boot = await api("bootstrap"); S.me = S.boot.me; }catch(e){}
-    showTab("leads");
+    const d = await api("lead_get", {id});
+    if(seq !== viewSeq) return;
+    S.lead = d; renderLead();
   }catch(e){
-    if(e.code==="signed_out"){ sheet.close(); gateSignIn(); return; }
-    leadError(e.message);
-  }finally{ btn.disabled = false; btn.textContent = "Save lead"; }
-});
-$("#leadCancel").addEventListener("click", ()=>sheet.close());
+    if(seq !== viewSeq) return;
+    if(e.code==="signed_out"){ fail(e); return; }
+    $("#view").innerHTML = `<a class="back" href="#/leads">← Leads</a><div class="card empty"><p class="err">${esc(e.message)}</p></div>`;
+  }
+}
+function renderLead(){
+  const d = S.lead, l = d.lead, can = l.can_edit && l.status !== "duplicate";
+  const wa = (l.whatsapp_e164 || l.phone_e164 || "").replace(/[^0-9]/g, "");
+  const pending = d.duplicates.filter(x=>x.status==="pending");
+  const factors = (d.score && d.score.factors) || {};
+  const stageCtl = can
+    ? `<select id="leadStage" aria-label="Stage">${Object.keys(STATUS).filter(k=>k!=="duplicate").map(k=>`<option value="${k}" ${l.status===k?"selected":""}>${esc(STATUS[k])}</option>`).join("")}</select>`
+    : `<div>${stagePill(l.status)}</div>`;
+  const ownerCtl = can && S.me.is_manager
+    ? `<select id="leadOwner" aria-label="Owner">${ownerOptions(l.owner_staff_id, true)}</select>`
+    : `<div>${esc(l.owner_name || "No owner")} ${can && !l.owner_staff_id ? `<button class="link" data-act="leadTake">Take this lead</button>` : ""}</div>`;
+  $("#view").innerHTML = `
+    <a class="back" href="#/leads">← Leads</a>
+    <div class="head">
+      <div><p class="title">${esc(l.full_name || "No name")}</p><div class="sub"><span class="no">${esc(l.lead_no)}</span> · ${esc(l.source)} · added ${esc(when(l.created_at))}</div></div>
+      <div class="pills">${stagePill(l.status)} ${tempPill(l.temperature, l.score)}</div>
+    </div>
+    <div class="cols">
+      <div>
+        <div class="card">
+          ${l.next_best_action ? `<div class="next"><span>Next step: ${esc(l.next_best_action)}</span></div>` : ""}
+          ${l.status==="lost" && l.lost_reason ? `<p class="muted">Lost because: ${esc(l.lost_reason)}</p>` : ""}
+          ${l.status==="duplicate" ? `<p class="muted">This lead was merged into <a href="#/lead/${esc(l.duplicate_of_lead_id)}">another lead</a> and is closed.</p>` : ""}
+          <div class="ctl">
+            <div class="field" style="margin:0"><label for="leadStage">Stage</label>${stageCtl}</div>
+            <div class="field" style="margin:0"><label for="leadOwner">Owner</label>${ownerCtl}</div>
+          </div>
+          <div class="acts" style="margin-top:12px">
+            ${l.phone_e164 ? `<a class="btn sm" href="tel:${esc(l.phone_e164)}">Call</a>` : ""}
+            ${wa ? `<a class="btn sm ghost" href="https://wa.me/${esc(wa)}" target="_blank" rel="noopener">WhatsApp</a>` : ""}
+            ${l.email ? `<a class="btn sm ghost" href="mailto:${esc(l.email)}">Email</a>` : ""}
+          </div>
+        </div>
+        ${pending.length ? `<div class="card">
+          <h2>Possible duplicates</h2>
+          <ul class="list">${pending.map(x=>`<li><div class="rowbtw"><div><a class="name" href="#/lead/${esc(x.other.id)}" style="font-weight:700">${esc(x.other.full_name || "No name")}</a> <span class="pill ${x.match_type==="exact"?"bad":"warn"}">${x.match_type==="exact" ? "Same contact" : "Similar"}</span>
+            <div class="sub"><span class="no">${esc(x.other.lead_no)}</span> · ${esc(STATUS[x.other.status] || x.other.status)} · ${esc((x.reasons || []).join(", "))} · added ${esc(day(x.other.created_at))}${x.other.owner_name ? " · " + esc(x.other.owner_name) : ""}</div></div>
+            ${can ? `<div class="acts"><button class="btn sm" data-act="dupMerge" data-id="${esc(x.id)}">Merge</button><button class="btn sm ghost" data-act="dupDismiss" data-id="${esc(x.id)}">Not the same</button></div>` : ""}</div></li>`).join("")}</ul>
+        </div>` : ""}
+        <div class="card">
+          <div class="cardhead"><h2>Trip and contact</h2>${can ? `<button class="link" data-act="leadEdit">Edit</button>` : ""}</div>
+          ${kv([
+            ["Phone", l.phone_e164], ["WhatsApp", l.whatsapp_e164 && l.whatsapp_e164 !== l.phone_e164 ? l.whatsapp_e164 : ""], ["Email", l.email], ["Company", l.company_name],
+            ["Destination", l.destination_text], ["Travel date", day(l.travel_start)], ["Return date", day(l.travel_end)], ["Travellers", pax(l)],
+            ["Budget", rupees(l.budget_amount)], ["Campaign", l.campaign || l.utm_campaign], ["First reply", l.first_response_at ? when(l.first_response_at) : ""]
+          ])}
+          ${l.message ? `<div class="quote">${esc(l.message)}</div>` : ""}
+        </div>
+        <div class="card">
+          <div class="cardhead"><h2>Tasks</h2>${S.me.role!=="read_only" && l.status!=="duplicate" ? `<button class="link" data-act="taskAdd">Add task</button>` : ""}</div>
+          ${d.tasks.length ? `<ul class="list">${d.tasks.map(t=>taskRow(t, false)).join("")}</ul>` : `<p class="muted">No tasks for this lead.</p>`}
+        </div>
+        <div class="card">
+          <h2>Notes</h2>
+          ${l.can_edit ? `<div class="field"><label for="noteBody">Add a note</label><textarea id="noteBody" maxlength="4000" placeholder="What was said, what was agreed"></textarea></div><button class="btn sm" data-act="noteAdd">Save note</button>` : ""}
+          ${d.notes.length ? `<ul class="list" style="margin-top:14px">${d.notes.map(n=>`<li><div class="note">${esc(n.body)}</div><div class="sub">${esc(when(n.at))}${n.by ? " · " + esc(n.by) : ""}</div></li>`).join("")}</ul>` : (l.can_edit ? "" : `<p class="muted">No notes yet.</p>`)}
+        </div>
+        <div class="card"><h2>History</h2>${timeline(d.timeline)}</div>
+      </div>
+      <aside>
+        <div class="card">
+          <h2>Score</h2>
+          <div class="rowbtw" style="align-items:center;margin-bottom:8px"><span class="scorebig num">${esc(l.score ?? 0)}</span>${tempPill(l.temperature)}</div>
+          ${Object.keys(FACTOR).map(k=>`<div class="factor"><span class="${factors[k] ? "" : "muted"}">${esc(FACTOR[k])}</span><b class="${factors[k] ? "" : "muted"}">${factors[k] ? "+" + esc(factors[k]) : "0"}</b></div>`).join("")}
+          ${d.score && d.score.ai_score != null ? `<div class="factor"><span>AI reading of the request</span><b>${esc(d.score.ai_score)}</b></div>` : ""}
+          <p class="muted small" style="margin:8px 0 0">Out of 100. Hot from 60, warm from 35.</p>
+        </div>
+        ${d.customer ? `<div class="card">
+          <h2>Customer</h2>
+          <a class="name" href="#/customer/${esc(d.customer.id)}" style="font-weight:700">${esc(d.customer.full_name)}</a>
+          <div class="sub"><span class="no">${esc(d.customer.customer_no)}</span> · ${esc(d.customer.leads)} lead${d.customer.leads===1 ? "" : "s"}</div>
+          ${d.other_leads.length ? `<h3 style="margin-top:14px">Other leads</h3><ul class="list">${d.other_leads.map(o=>`<li><a href="#/lead/${esc(o.id)}">${esc(o.destination_text || o.lead_no)}</a> ${stagePill(o.status)}<div class="sub">${esc(o.lead_no)} · ${esc(day(o.created_at))}</div></li>`).join("")}</ul>` : ""}
+        </div>` : ""}
+      </aside>
+    </div>`;
+}
+async function leadCall(action, payload, done){
+  try{ await api(action, {id:S.lead.lead.id, ...payload}); if(done) toast(done); refreshBoot(); refresh(); }
+  catch(e){ fail(e); refresh(); }
+}
+function leadEdit(){
+  const l = S.lead.lead;
+  const init = { full_name:l.full_name || "", phone:l.phone_e164 || "", email:l.email || "", company_name:l.company_name || "", destination:l.destination_text || "",
+    travel_start:l.travel_start || "", travel_end:l.travel_end || "", adults:l.pax_adults ?? "", children:l.pax_children ?? "", budget:l.budget_amount ?? "", audience:l.audience || "retail", message:l.message || "" };
+  openForm({
+    title:"Edit lead", submit:"Save changes",
+    fields:[
+      {id:"full_name", label:"Name", type:"text", wide:true, max:120, value:init.full_name},
+      {id:"phone", label:"Phone", type:"tel", max:30, value:init.phone},
+      {id:"email", label:"Email", type:"email", max:160, value:init.email, optional:true},
+      {id:"destination", label:"Destination", type:"text", max:160, value:init.destination, optional:true},
+      {id:"company_name", label:"Company", type:"text", max:160, value:init.company_name, optional:true},
+      {id:"travel_start", label:"Travel date", type:"date", value:init.travel_start, optional:true},
+      {id:"travel_end", label:"Return date", type:"date", value:init.travel_end, optional:true},
+      {id:"adults", label:"Adults", type:"number", value:init.adults, optional:true},
+      {id:"children", label:"Children", type:"number", value:init.children, optional:true},
+      {id:"budget", label:"Budget in rupees", type:"number", value:init.budget, optional:true},
+      {id:"audience", label:"Who is asking", type:"select", value:init.audience, options:[["retail","A traveller"],["b2b","A travel agent"],["corporate","A company"]]},
+      {id:"message", label:"What they asked for", type:"textarea", wide:true, max:4000, value:init.message, optional:true}
+    ],
+    onSubmit: async v=>{
+      const p = {}; Object.keys(v).forEach(k=>{ if(String(v[k]) !== String(init[k])) p[k] = v[k]; });
+      if(!Object.keys(p).length) return;
+      await api("lead_update", {id:l.id, ...p});
+      toast("Lead saved."); refresh();
+    }
+  });
+}
 
-// ---------------------------------------------------------------- events
-let qTimer = 0;
-document.addEventListener("click", e=>{
-  const tab = e.target.closest("[data-tab]"); if(tab){ showTab(tab.dataset.tab); return; }
-  if(e.target.closest("[data-add]")){ openLeadSheet(); return; }
-  if(e.target.closest("[data-retry]")){ loadLeads(); return; }
-  const st = e.target.closest("[data-stage]"); if(st){ S.status = st.dataset.stage; S.q = ""; showTab("leads"); return; }
+// ---------------------------------------------------------------- tasks page
+function viewTasks(){
+  const f = S.tf;
+  const whens = [["open","Open"],["overdue","Overdue"],["today","Today"],["upcoming","Later"],["done","Done"]];
+  $("#view").innerHTML = `
+    <div class="card">
+      <div class="bar">
+        <div class="seg" role="group" aria-label="Which tasks">${whens.map(w=>`<button data-act="taskWhen" data-v="${w[0]}" aria-pressed="${f.when===w[0]}">${esc(w[1])}</button>`).join("")}</div>
+        <div class="seg" role="group" aria-label="Whose tasks"><button data-act="taskScope" data-v="mine" aria-pressed="${f.scope==="mine"}">Mine</button><button data-act="taskScope" data-v="all" aria-pressed="${f.scope==="all"}">${S.me.role==="sales_executive" ? "Mine and unassigned" : "Everyone"}</button></div>
+        <div class="grow"></div>
+        ${S.me.role!=="read_only" ? `<button class="btn" data-act="taskAdd">Add task</button>` : ""}
+      </div>
+      <div id="taskList"><p class="muted empty">Loading tasks…</p></div>
+    </div>`;
+  const seq = viewSeq;
+  api("tasks_list", {scope:f.scope, when:f.when, limit:200}).then(r=>{
+    if(seq !== viewSeq || !$("#taskList")) return;
+    const c = r.counts || {};
+    $("#taskList").innerHTML = `<p class="muted small" style="margin:0 0 12px">${esc(c.open || 0)} open · ${esc(c.today || 0)} due today · <span class="${c.overdue ? "sub over" : ""}">${esc(c.overdue || 0)} overdue</span>${c.escalated ? ` · ${esc(c.escalated)} escalated` : ""}</p>` +
+      ((r.tasks || []).length ? `<ul class="list">${r.tasks.map(t=>taskRow(t, true)).join("")}</ul>` : `<p class="muted empty">Nothing here.</p>`);
+  }).catch(e=>{
+    if(seq !== viewSeq) return;
+    if(e.code==="signed_out"){ fail(e); return; }
+    if($("#taskList")) $("#taskList").innerHTML = `<div class="empty"><p class="err">Couldn't load tasks. ${esc(e.message)}</p><button class="btn ghost" data-act="retry">Try again</button></div>`;
+  });
+}
+
+// ---------------------------------------------------------------- customers
+function viewCustomers(){
+  $("#view").innerHTML = `
+    <div class="card">
+      <div class="bar"><div class="grow"><input type="search" id="cq" placeholder="Search name, phone, email, company, city or customer number" value="${esc(S.cq)}" aria-label="Search customers"></div></div>
+      <div id="custList"><p class="muted empty">Loading customers…</p></div>
+    </div>`;
+  loadCustomers();
+}
+async function loadCustomers(){
+  const seq = ++viewSeq;
+  try{
+    const r = await api("customers_list", {q:S.cq, limit:100});
+    if(seq !== viewSeq || !$("#custList")) return;
+    const rows = r.customers || [];
+    if(!rows.length){ $("#custList").innerHTML = `<p class="muted empty">${S.cq ? "No customers match this search." : "No customers yet. A customer is created the first time someone sends an enquiry."}</p>`; return; }
+    $("#custList").innerHTML = `<div class="tablewrap"><table>
+      <thead><tr><th>Name</th><th>Contact</th><th>City</th><th>Leads</th><th>Last enquiry</th></tr></thead>
+      <tbody>${rows.map(c=>`<tr>
+        <td><a class="name" href="#/customer/${esc(c.id)}">${esc(c.full_name)}</a><div class="sub"><span class="no">${esc(c.customer_no)}</span>${c.kind!=="individual" ? " · " + esc(KIND[c.kind] || c.kind) : ""}${c.company_name ? " · " + esc(c.company_name) : ""}</div></td>
+        <td>${c.phone_e164 ? `<a href="tel:${esc(c.phone_e164)}">${esc(c.phone_e164)}</a>` : ""}${c.email ? `<div class="sub">${esc(c.email)}</div>` : ""}</td>
+        <td>${esc(c.city || "")}</td>
+        <td class="num">${esc(c.leads)}${c.won ? ` <span class="pill ok">${esc(c.won)} won</span>` : ""}</td>
+        <td class="num">${esc(day(c.last_lead_at || c.created_at))}</td>
+      </tr>`).join("")}</tbody></table></div>
+      ${r.total > rows.length ? `<p class="muted small" style="margin:10px 0 0">Showing ${esc(rows.length)} of ${esc(r.total)}. Search to narrow it down.</p>` : ""}`;
+  }catch(e){
+    if(seq !== viewSeq) return;
+    if(e.code==="signed_out"){ fail(e); return; }
+    if($("#custList")) $("#custList").innerHTML = `<div class="empty"><p class="err">Couldn't load customers. ${esc(e.message)}</p><button class="btn ghost" data-act="retry">Try again</button></div>`;
+  }
+}
+async function viewCustomer(id){
+  const seq = viewSeq;
+  if(!S.customer || S.customer.customer.id !== id) $("#view").innerHTML = `<p class="muted empty">Loading…</p>`;
+  try{
+    const d = await api("customer_get", {id});
+    if(seq !== viewSeq) return;
+    S.customer = d; renderCustomer();
+  }catch(e){
+    if(seq !== viewSeq) return;
+    if(e.code==="signed_out"){ fail(e); return; }
+    $("#view").innerHTML = `<a class="back" href="#/customers">← Customers</a><div class="card empty"><p class="err">${esc(e.message)}</p></div>`;
+  }
+}
+function renderCustomer(){
+  const d = S.customer, c = d.customer, p = d.preferences || {}, can = c.can_edit;
+  const consent = Object.keys(d.consent || {});
+  $("#view").innerHTML = `
+    <a class="back" href="#/customers">← Customers</a>
+    <div class="head">
+      <div><p class="title">${esc(c.full_name)}</p><div class="sub"><span class="no">${esc(c.customer_no)}</span> · ${esc(KIND[c.kind] || c.kind)} · since ${esc(day(c.created_at))}</div></div>
+      <div class="acts">
+        ${c.phone_e164 ? `<a class="btn sm" href="tel:${esc(c.phone_e164)}">Call</a>` : ""}
+        ${(c.whatsapp_e164 || c.phone_e164) ? `<a class="btn sm ghost" href="https://wa.me/${esc((c.whatsapp_e164 || c.phone_e164).replace(/[^0-9]/g, ""))}" target="_blank" rel="noopener">WhatsApp</a>` : ""}
+      </div>
+    </div>
+    <div class="cols">
+      <div>
+        <div class="card">
+          <div class="cardhead"><h2>Details</h2>${can ? `<button class="link" data-act="custEdit">Edit</button>` : ""}</div>
+          ${kv([["Phone", c.phone_e164], ["WhatsApp", c.whatsapp_e164 && c.whatsapp_e164 !== c.phone_e164 ? c.whatsapp_e164 : ""], ["Email", c.email], ["Company", c.company_name], ["City", c.city], ["State", c.state], ["Country", c.country_code], ["Language", c.language], ["Agent code", c.agent_code]])}
+          ${c.notes ? `<div class="quote">${esc(c.notes)}</div>` : ""}
+        </div>
+        <div class="card">
+          <div class="cardhead"><h2>Leads</h2></div>
+          ${d.leads.length ? `<ul class="list">${d.leads.map(l=>`<li><div class="rowbtw"><div><a class="name" href="#/lead/${esc(l.id)}" style="font-weight:700">${esc(l.destination_text || "Enquiry")}</a><div class="sub"><span class="no">${esc(l.lead_no)}</span> · ${esc(day(l.created_at))}${l.travel_start ? " · travelling " + esc(day(l.travel_start)) : ""}${l.owner_name ? " · " + esc(l.owner_name) : ""}</div></div><div>${stagePill(l.status)}</div></div></li>`).join("")}</ul>` : `<p class="muted">No leads you can see.</p>`}
+        </div>
+        <div class="card">
+          <div class="cardhead"><h2>Travellers</h2>${can ? `<button class="link" data-act="travAdd">Add traveller</button>` : ""}</div>
+          ${d.travellers.length ? `<ul class="list">${d.travellers.map(t=>`<li><div class="rowbtw"><div><b>${esc(t.full_name)}</b>${t.relation ? ` <span class="muted">· ${esc(t.relation)}</span>` : ""}
+            <div class="sub">${[t.date_of_birth ? "Born " + day(t.date_of_birth) : "", t.nationality_code, t.meal_preference, t.special_assistance].filter(Boolean).map(esc).join(" · ")}</div></div>
+            ${can ? `<div class="acts"><button class="link quiet" data-act="travEdit" data-id="${esc(t.id)}">Edit</button><button class="link quiet" data-act="travRemove" data-id="${esc(t.id)}">Remove</button></div>` : ""}</div></li>`).join("")}</ul>` : `<p class="muted">No travellers saved. Add the people who usually travel, so bookings are quicker.</p>`}
+        </div>
+        ${d.tasks.length ? `<div class="card"><h2>Open tasks</h2><ul class="list">${d.tasks.map(t=>taskRow(t, false, true)).join("")}</ul></div>` : ""}
+        <div class="card"><h2>History</h2>${timeline(d.timeline)}</div>
+      </div>
+      <aside>
+        <div class="card">
+          <div class="cardhead"><h2>Preferences</h2>${can ? `<button class="link" data-act="prefEdit">Edit</button>` : ""}</div>
+          ${kv([["Hotel", p.hotel_category], ["Meals", p.meal_plan], ["Vehicle", p.vehicle], ["Likes to visit", (p.destinations || []).join(", ")], ["Language", p.language], ["Best way to reach", CHANNEL[p.channel_preference] || ""], ["Special help", p.special_assistance], ["Notes", p.notes]])}
+        </div>
+        <div class="card">
+          <h2>Marketing consent</h2>
+          ${consent.length ? consent.map(k=>`<div class="factor"><span>${esc(CHANNEL[k] || k)}</span><b>${d.consent[k] ? "Yes" : "No"}</b></div>`).join("") : `<p class="muted">Not recorded. Do not send offers until they agree.</p>`}
+        </div>
+      </aside>
+    </div>`;
+}
+function custEdit(){
+  const c = S.customer.customer;
+  const init = { full_name:c.full_name || "", kind:c.kind, phone:c.phone_e164 || "", whatsapp:c.whatsapp_e164 || "", email:c.email || "", company_name:c.company_name || "", city:c.city || "", state:c.state || "", language:c.language || "", notes:c.notes || "" };
+  openForm({
+    title:"Edit customer", submit:"Save changes",
+    fields:[
+      {id:"full_name", label:"Name", type:"text", max:120, value:init.full_name},
+      {id:"kind", label:"Type", type:"select", value:init.kind, options:Object.keys(KIND).map(k=>[k, KIND[k]])},
+      {id:"phone", label:"Phone", type:"tel", max:30, value:init.phone},
+      {id:"whatsapp", label:"WhatsApp", type:"tel", max:30, value:init.whatsapp, optional:true},
+      {id:"email", label:"Email", type:"email", max:160, value:init.email, optional:true},
+      {id:"company_name", label:"Company", type:"text", max:160, value:init.company_name, optional:true},
+      {id:"city", label:"City", type:"text", max:80, value:init.city, optional:true},
+      {id:"state", label:"State", type:"text", max:80, value:init.state, optional:true},
+      {id:"language", label:"Language", type:"text", max:40, value:init.language, optional:true},
+      {id:"notes", label:"Notes", type:"textarea", wide:true, max:4000, value:init.notes, optional:true}
+    ],
+    onSubmit: async v=>{
+      const p = {}; Object.keys(v).forEach(k=>{ if(String(v[k]) !== String(init[k])) p[k] = v[k]; });
+      if(!Object.keys(p).length) return;
+      await api("customer_update", {id:c.id, ...p});
+      toast("Customer saved."); refresh();
+    }
+  });
+}
+function prefEdit(){
+  const c = S.customer.customer, p = S.customer.preferences || {};
+  openForm({
+    title:"Preferences", submit:"Save preferences",
+    fields:[
+      {id:"hotel_category", label:"Hotel", type:"text", max:60, value:p.hotel_category || "", placeholder:"e.g. 4 star", optional:true},
+      {id:"meal_plan", label:"Meals", type:"text", max:60, value:p.meal_plan || "", placeholder:"e.g. Breakfast and dinner", optional:true},
+      {id:"vehicle", label:"Vehicle", type:"text", max:60, value:p.vehicle || "", optional:true},
+      {id:"language", label:"Language", type:"text", max:40, value:p.language || "", optional:true},
+      {id:"destinations", label:"Likes to visit", type:"text", wide:true, value:(p.destinations || []).join(", "), hint:"Separate places with commas.", optional:true},
+      {id:"channel_preference", label:"Best way to reach", type:"select", value:p.channel_preference || "", options:[["","No preference"]].concat(Object.keys(CHANNEL).map(k=>[k, CHANNEL[k]]))},
+      {id:"special_assistance", label:"Special help", type:"text", max:500, value:p.special_assistance || "", optional:true},
+      {id:"notes", label:"Notes", type:"textarea", wide:true, max:2000, value:p.notes || "", optional:true}
+    ],
+    onSubmit: async v=>{
+      await api("customer_update", {id:c.id, preferences:{...v, destinations:list(v.destinations)}});
+      toast("Preferences saved."); refresh();
+    }
+  });
+}
+function travForm(t){
+  const c = S.customer.customer;
+  openForm({
+    title: t ? "Edit traveller" : "Add a traveller", submit: t ? "Save traveller" : "Add traveller",
+    fields:[
+      {id:"full_name", label:"Name, as on their ID", type:"text", wide:true, max:120, value:t ? t.full_name : ""},
+      {id:"relation", label:"Relation", type:"text", max:40, value:t ? (t.relation || "") : "", placeholder:"e.g. Self, spouse, child", optional:true},
+      {id:"date_of_birth", label:"Date of birth", type:"date", value:t ? (t.date_of_birth || "") : "", optional:true},
+      {id:"nationality_code", label:"Nationality", type:"text", max:2, value:t ? (t.nationality_code || "") : "", placeholder:"IN", hint:"Two-letter country code.", optional:true},
+      {id:"meal_preference", label:"Meals", type:"text", max:60, value:t ? (t.meal_preference || "") : "", placeholder:"e.g. Vegetarian", optional:true},
+      {id:"special_assistance", label:"Special help", type:"text", wide:true, max:500, value:t ? (t.special_assistance || "") : "", optional:true}
+    ],
+    onSubmit: async v=>{
+      if(!v.full_name) throw new Error("Enter the name of the traveller.");
+      await api("traveller_save", t ? {id:t.id, ...v} : {customer_id:c.id, ...v});
+      toast(t ? "Traveller saved." : "Traveller added."); refresh();
+    }
+  });
+}
+
+// ---------------------------------------------------------------- team
+function viewTeam(){
+  $("#view").innerHTML = `<div class="card"><h2>Team</h2><p class="muted small" style="margin:-4px 0 12px">People appear here after they open the CRM once. Give them the CRM tool in NegoTrip HQ first.</p><div id="teamList"><p class="muted empty">Loading…</p></div></div>`;
+  const seq = viewSeq;
+  api("staff_admin_list").then(r=>{
+    if(seq !== viewSeq || !$("#teamList")) return;
+    S.team = r.staff || [];
+    $("#teamList").innerHTML = `<div class="tablewrap"><table>
+      <thead><tr><th>Name</th><th>Role</th><th>Access</th><th>Open leads</th><th>Open tasks</th><th>Good at</th><th>Last seen</th><th></th></tr></thead>
+      <tbody>${S.team.map(s=>`<tr>
+        <td><b>${esc(s.name)}</b>${s.is_me ? ` <span class="muted">(me)</span>` : ""}<div class="sub">${esc(s.email)}</div></td>
+        <td>${esc(ROLE[s.role] || s.role)}</td>
+        <td><span class="pill ${s.active ? "ok" : "bad"}">${s.active ? "Active" : "Paused"}</span></td>
+        <td class="num">${esc(s.open_leads)}${s.max_open_leads ? ` <span class="muted">of ${esc(s.max_open_leads)}</span>` : ""}</td>
+        <td class="num">${esc(s.open_tasks)}</td>
+        <td>${esc((s.specialities || []).join(", "))}</td>
+        <td class="num">${esc(s.last_seen_at ? when(s.last_seen_at) : "")}</td>
+        <td><button class="link" data-act="staffEdit" data-id="${esc(s.id)}">Edit</button></td>
+      </tr>`).join("")}</tbody></table></div>`;
+  }).catch(e=>{
+    if(seq !== viewSeq) return;
+    if(e.code==="signed_out"){ fail(e); return; }
+    if($("#teamList")) $("#teamList").innerHTML = `<div class="empty"><p class="err">${esc(e.message)}</p></div>`;
+  });
+}
+function staffEdit(id){
+  const s = (S.team || []).find(x=>x.id===id); if(!s) return;
+  const init = { role:s.role, active:s.active ? "yes" : "no", specialities:(s.specialities || []).join(", "), languages:(s.languages || []).join(", "), max_open_leads:s.max_open_leads ?? "", phone:s.phone_e164 || "" };
+  const fields = [];
+  if(!s.is_me){
+    fields.push({id:"role", label:"Role", type:"select", value:init.role, options:Object.keys(ROLE).filter(k=>k!=="super_admin" || S.me.role==="super_admin").map(k=>[k, ROLE[k]])});
+    fields.push({id:"active", label:"Access", type:"select", value:init.active, options:[["yes","Active"],["no","Paused"]]});
+  }
+  fields.push(
+    {id:"specialities", label:"Good at", type:"text", wide:true, value:init.specialities, hint:"Destinations or kinds of customer, separated by commas. New leads that match go to this person first.", optional:true},
+    {id:"languages", label:"Languages", type:"text", value:init.languages, optional:true},
+    {id:"max_open_leads", label:"Most open leads at once", type:"number", value:init.max_open_leads, hint:"Leave empty for no limit.", optional:true},
+    {id:"phone", label:"Phone", type:"tel", max:30, value:init.phone, optional:true}
+  );
+  openForm({
+    title:s.name, intro:s.email, submit:"Save", fields,
+    onSubmit: async v=>{
+      const p = {};
+      if(v.role !== undefined && v.role !== init.role) p.role = v.role;
+      if(v.active !== undefined && v.active !== init.active) p.active = v.active === "yes";
+      if(v.specialities !== init.specialities) p.specialities = list(v.specialities);
+      if(v.languages !== init.languages) p.languages = list(v.languages);
+      if(String(v.max_open_leads) !== String(init.max_open_leads)) p.max_open_leads = v.max_open_leads;
+      if(v.phone !== init.phone) p.phone = v.phone;
+      if(!Object.keys(p).length) return;
+      await api("staff_update", {id:s.id, ...p});
+      toast("Saved."); refreshBoot(); refresh();
+    }
+  });
+}
+
+// ---------------------------------------------------------------- form dialog
+const dlg = $("#dlg");
+let formCtx = null;
+function fieldHtml(f){
+  const id = "f_" + f.id, v = f.value ?? "";
+  const lab = `<label for="${id}">${esc(f.label)}${f.optional ? ` <span class="muted" style="font-weight:400">(optional)</span>` : ""}</label>`;
+  let input;
+  if(f.type==="select") input = `<select id="${id}">${f.options.map(o=>`<option value="${esc(o[0])}" ${String(o[0])===String(v) ? "selected" : ""}>${esc(o[1])}</option>`).join("")}</select>`;
+  else if(f.type==="textarea") input = `<textarea id="${id}" ${f.max ? `maxlength="${f.max}"` : ""}>${esc(v)}</textarea>`;
+  else input = `<input type="${f.type}" id="${id}" value="${esc(v)}" autocomplete="off" ${f.max ? `maxlength="${f.max}"` : ""} ${f.placeholder ? `placeholder="${esc(f.placeholder)}"` : ""} ${f.type==="number" ? `min="0" inputmode="numeric"` : ""}>`;
+  return `<div class="field ${f.wide ? "wide" : ""}">${lab}${input}${f.hint ? `<div class="hint">${esc(f.hint)}</div>` : ""}</div>`;
+}
+function openForm(cfg){
+  formCtx = cfg;
+  $("#dlgTitle").textContent = cfg.title;
+  $("#dlgIntro").textContent = cfg.intro || ""; $("#dlgIntro").hidden = !cfg.intro;
+  $("#dlgErr").hidden = true;
+  $("#dlgFields").innerHTML = (cfg.fields || []).map(fieldHtml).join("");
+  $("#dlgSave").textContent = cfg.submit || "Save"; $("#dlgSave").disabled = false;
+  dlg.showModal();
+  const first = $("#dlgFields input, #dlgFields select, #dlgFields textarea");
+  if(first) first.focus(); else $("#dlgSave").focus();
+}
+$("#dlgForm").addEventListener("submit", async ev=>{
+  ev.preventDefault();
+  if(!formCtx) return;
+  const v = {};
+  (formCtx.fields || []).forEach(f=>{ const el = $("#f_" + f.id); if(el) v[f.id] = el.value.trim(); });
+  const btn = $("#dlgSave"), label = btn.textContent; btn.disabled = true; btn.textContent = "Saving…";
+  try{ await formCtx.onSubmit(v); dlg.close(); }
+  catch(e){
+    if(e.code==="signed_out"){ dlg.close(); fail(e); return; }
+    const el = $("#dlgErr"); el.textContent = e.message || "That did not work."; el.hidden = false;
+  }
+  finally{ btn.disabled = false; btn.textContent = label; }
 });
+$("#dlgCancel").addEventListener("click", ()=>dlg.close());
+dlg.addEventListener("close", ()=>{ if(formCtx && formCtx.onClose) formCtx.onClose(); formCtx = null; });
+
+// ---------------------------------------------------------------- actions
+async function taskOp(id, op, msg){
+  try{ await api("task_update", {id, op}); toast(msg); refreshBoot(); refresh(); }catch(e){ fail(e); }
+}
+const ACT = {
+  retry: ()=>refresh(),
+  leadAdd: ()=>leadAdd(),
+  leadFilter: el=>{ let f = {}; try{ f = JSON.parse(el.dataset.filter || "{}"); }catch(e){} S.lf = {status:f.status || "", temperature:f.temperature || "", owner:f.owner || "", q:""}; if(location.hash==="#/leads") route(); else location.hash = "#/leads"; },
+  leadEdit: ()=>leadEdit(),
+  leadTake: ()=>leadCall("lead_assign", {staff_id:"me"}, "This lead is yours now."),
+  noteAdd: ()=>{ const el = $("#noteBody"), body = el ? el.value.trim() : ""; if(!body){ toast("Write the note first."); if(el) el.focus(); return; } leadCall("lead_note_add", {body}, "Note saved."); },
+  dupMerge: el=>{
+    const x = S.lead.duplicates.find(d=>d.id===el.dataset.id); if(!x) return;
+    openForm({ title:"Merge this lead?", submit:"Merge", fields:[],
+      intro:`${S.lead.lead.lead_no} will be closed as a duplicate and ${x.other.lead_no} (${x.other.full_name || "no name"}) stays open. Nothing is deleted, and the history shows the merge.`,
+      onSubmit: async ()=>{ const r = await api("duplicate_decide", {id:x.id, decision:"merge"}); toast("Merged."); refreshBoot(); if(r.kept_lead_id) location.hash = "#/lead/" + r.kept_lead_id; else refresh(); } });
+  },
+  dupDismiss: async el=>{ try{ await api("duplicate_decide", {id:el.dataset.id, decision:"dismiss"}); toast("Marked as not the same person."); refreshBoot(); refresh(); }catch(e){ fail(e); } },
+  taskAdd: ()=>taskForm(null, S.route.name==="lead" && S.lead ? {lead_id:S.lead.lead.id} : S.route.name==="customer" && S.customer ? {customer_id:S.customer.customer.id} : null),
+  taskEdit: el=>{ const t = S.tasks[el.dataset.id]; if(t) taskForm(t); },
+  taskDone: el=>taskOp(el.dataset.id, "complete", "Task done."),
+  taskReopen: el=>taskOp(el.dataset.id, "reopen", "Task reopened."),
+  taskWhen: el=>{ S.tf.when = el.dataset.v; route(true); },
+  taskScope: el=>{ S.tf.scope = el.dataset.v; route(true); },
+  custEdit: ()=>custEdit(),
+  prefEdit: ()=>prefEdit(),
+  travAdd: ()=>travForm(null),
+  travEdit: el=>{ const t = S.customer.travellers.find(x=>x.id===el.dataset.id); if(t) travForm(t); },
+  travRemove: el=>{
+    const t = S.customer.travellers.find(x=>x.id===el.dataset.id); if(!t) return;
+    openForm({ title:"Remove this traveller?", submit:"Remove", fields:[], intro:`${t.full_name} will no longer be listed for this customer.`,
+      onSubmit: async ()=>{ await api("traveller_save", {id:t.id, remove:true}); toast("Traveller removed."); refresh(); } });
+  },
+  staffEdit: el=>staffEdit(el.dataset.id)
+};
+document.addEventListener("click", e=>{
+  const el = e.target.closest("[data-act]");
+  if(el && ACT[el.dataset.act] && S.me){ e.preventDefault(); ACT[el.dataset.act](el); }
+});
+let qTimer = 0;
 document.addEventListener("input", e=>{
-  if(e.target.id==="q"){ S.q = e.target.value.trim(); clearTimeout(qTimer); qTimer = setTimeout(loadLeads, 350); }
+  if(e.target.id==="q"){ S.lf.q = e.target.value.trim(); clearTimeout(qTimer); qTimer = setTimeout(loadLeads, 350); }
+  if(e.target.id==="cq"){ S.cq = e.target.value.trim(); clearTimeout(qTimer); qTimer = setTimeout(loadCustomers, 350); }
 });
 document.addEventListener("change", e=>{
-  if(e.target.id==="fStatus"){ S.status = e.target.value; loadLeads(); }
+  const id = e.target.id;
+  if(id==="fStatus"){ S.lf.status = e.target.value; loadLeads(); }
+  else if(id==="fTemp"){ S.lf.temperature = e.target.value; loadLeads(); }
+  else if(id==="fOwner"){ S.lf.owner = e.target.value; loadLeads(); }
+  else if(id==="leadStage"){
+    const to = e.target.value;
+    if(to==="lost"){
+      openForm({ title:"Why was this lead lost?", submit:"Mark as lost",
+        fields:[{id:"reason", label:"Reason", type:"textarea", wide:true, max:500, placeholder:"e.g. Booked elsewhere, price too high, plans changed"}],
+        onSubmit: async v=>{ if(!v.reason) throw new Error("Say why the lead was lost."); await api("lead_set_status", {id:S.lead.lead.id, status:"lost", reason:v.reason}); toast("Marked as lost."); refreshBoot(); },
+        onClose: ()=>refresh() });
+    }else leadCall("lead_set_status", {status:to}, "Stage changed to " + (STATUS[to] || to) + ".");
+  }
+  else if(id==="leadOwner"){ leadCall("lead_assign", {staff_id:e.target.value || null}, e.target.value ? "Owner changed." : "Owner removed."); }
 });
 
 boot();
