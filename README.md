@@ -50,6 +50,7 @@ Behind the screens:
 | `icon.svg`, `icon-192.png`, `icon-512.png` | App icons |
 | `db/001_crm_core.sql` | Core tables |
 | `db/002_lead_engine.sql` | Lead engine: duplicates, scoring, assignment, tasks, customers, `crm.api` |
+| `db/003_intake_reuse.sql` | Intake for connected lead sources: reuse of an open lead when the same person writes again, AI screening verdict, dry run |
 
 ## n8n workflows
 

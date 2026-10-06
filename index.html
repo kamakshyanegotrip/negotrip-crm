@@ -554,6 +554,7 @@ const EVENT_TEXT = {
   "lead.status_changed": d=>"Stage: " + (STATUS[d.from] || d.from) + " → " + (STATUS[d.to] || d.to) + (d.reason ? ". " + d.reason : ""),
   "lead.updated": d=>"Details changed: " + (d.fields || []).join(", "),
   "lead.ai_scored": d=>"AI read the request and rated it " + (d.ai_score ?? "") + " out of 100" + (d.reason ? ": " + d.reason : ""),
+  "lead.contacted_again": d=>"Got in touch again" + (d.source_name ? " by " + d.source_name : "") + (d.preview ? ": " + d.preview : ""),
   "lead.merged_from": d=>(d.lead_no || "Another lead") + " was merged into this lead",
   "duplicate.decided": d=>d.decision==="merge" ? "Merged into " + (d.other_lead_no || "another lead") : "Marked as not a duplicate of " + (d.other_lead_no || "another lead"),
   "note.added": d=>"Note added" + (d.preview ? ": " + d.preview : ""),
