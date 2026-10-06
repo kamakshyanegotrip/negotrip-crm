@@ -57,9 +57,22 @@ Behind the screens:
 | Workflow | What it does |
 | --- | --- |
 | `TRAVELCRM-API-001-CRM-Web-App-API` | Backend for this app |
-| `TRAVELCRM-WF-001-Lead-Capture-Gateway` | One protected address for leads from websites, ad forms and partners |
+| `TRAVELCRM-WF-001-Lead-Capture-Gateway` | One protected address for leads from websites, ad forms and partners. POST `/webhook/travelcrm-lead` with the header `X-CRM-Key` |
+| `TRAVELCRM-SUB-001-Lead-Intake` | Shared intake that other workflows call. Screens email with AI so supplier mail does not become a lead |
 | `TRAVELCRM-WF-007-Task-Escalation` | Every 15 minutes, escalates overdue tasks |
 | `TRAVELCRM-WF-008-AI-Lead-Qualification` | Every 10 minutes, rates new requests with Gemini (no names, phones or emails are sent) |
 | `TRAVELCRM-ERR-001-Global-Error-Handler` | Records every workflow failure and queues failed background runs |
-| `TRAVELCRM-SETUP-001`, `-002` | Apply the database migrations (run once) |
-| `TRAVELCRM-TEST-001`, `-002` | Test harnesses; they leave no data behind |
+| `TRAVELCRM-SETUP-001`, `-002`, `-003` | Apply the database migrations (run once) |
+| `TRAVELCRM-TEST-001`, `-002`, `-003` | Test harnesses; they leave no data behind |
+
+## Where leads come from
+
+| Source | How it reaches the CRM |
+| --- | --- |
+| Added by hand | The Add lead form in this app |
+| Website forms (including Google Ads visitors) | `GAds AI · 36 Lead Intake` has a side branch, `CRM · Map Lead` then `CRM · Send Lead`, that calls `TRAVELCRM-SUB-001` |
+| Email to info@negotrip.com | `GAds AI · 38 Email Enquiry Intake` has the same side branch; the CRM screens each email first |
+| WhatsApp | `PRE-28 WhatsApp Inbox` has the same side branch; people already in the relationship contact list are skipped |
+| Anything else | POST to the lead capture gateway |
+
+When the same person writes again while their lead is still open, the message is added to that lead's history and the owner gets a follow-up task; no second lead is made.
