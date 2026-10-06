@@ -51,6 +51,7 @@ Behind the screens:
 | `db/001_crm_core.sql` | Core tables |
 | `db/002_lead_engine.sql` | Lead engine: duplicates, scoring, assignment, tasks, customers, `crm.api` |
 | `db/003_intake_reuse.sql` | Intake for connected lead sources: reuse of an open lead when the same person writes again, AI screening verdict, dry run |
+| `db/004_assign_fallback.sql` | A lead from outside goes to a manager when no sales person can take it |
 
 ## n8n workflows
 
@@ -62,7 +63,7 @@ Behind the screens:
 | `TRAVELCRM-WF-007-Task-Escalation` | Every 15 minutes, escalates overdue tasks |
 | `TRAVELCRM-WF-008-AI-Lead-Qualification` | Every 10 minutes, rates new requests with Gemini (no names, phones or emails are sent) |
 | `TRAVELCRM-ERR-001-Global-Error-Handler` | Records every workflow failure and queues failed background runs |
-| `TRAVELCRM-SETUP-001`, `-002`, `-003` | Apply the database migrations (run once) |
+| `TRAVELCRM-SETUP-001` to `-004` | Apply the database migrations (run once) |
 | `TRAVELCRM-TEST-001`, `-002`, `-003` | Test harnesses; they leave no data behind |
 
 ## Where leads come from

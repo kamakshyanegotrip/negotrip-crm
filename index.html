@@ -550,7 +550,7 @@ function leadAdd(){
 // ---------------------------------------------------------------- lead page
 const EVENT_TEXT = {
   "lead.received": d=>"Lead received" + (d.source_name ? " from " + d.source_name : ""),
-  "lead.assigned": d=>d.to_name ? "Given to " + d.to_name + (d.rule==="round_robin" ? " (next in turn)" : d.rule==="claimed" ? " (taken)" : "") : "Owner removed",
+  "lead.assigned": d=>d.to_name ? "Given to " + d.to_name + (d.rule==="round_robin" ? " (next in turn)" : d.rule==="claimed" ? " (taken)" : d.rule==="fallback_manager" ? " (no sales person was free)" : "") : "Owner removed",
   "lead.status_changed": d=>"Stage: " + (STATUS[d.from] || d.from) + " → " + (STATUS[d.to] || d.to) + (d.reason ? ". " + d.reason : ""),
   "lead.updated": d=>"Details changed: " + (d.fields || []).join(", "),
   "lead.ai_scored": d=>"AI read the request and rated it " + (d.ai_score ?? "") + " out of 100" + (d.reason ? ": " + d.reason : ""),
